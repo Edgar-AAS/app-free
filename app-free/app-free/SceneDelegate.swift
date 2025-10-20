@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         //MARK: Adicione aqui o LoginViewController
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .darkGray
+        let viewController = ViewController()
+        viewController.view.backgroundColor = .white
         let navigationController = UINavigationController(rootViewController: viewController)
         appWindow.rootViewController = navigationController
         appWindow.makeKeyAndVisible()

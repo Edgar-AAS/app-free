@@ -19,5 +19,14 @@
 			</array>
 		</dict>
 	</dict>
+	<key>Fonts open</key>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string></string>
+		<string>OpenSans-Bold.ttf</string>
+	</array>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 </dict>
 </plist>
