@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		912537EA2EA7B37800499123 /* InputMask in Frameworks */ = {isa = PBXBuildFile; productRef = 912537E92EA7B37800499123 /* InputMask */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D3C5B8402EA165670064FD23 /* app-free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "app-free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -41,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				912537EA2EA7B37800499123 /* InputMask in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +90,7 @@
 			);
 			name = "app-free";
 			packageProductDependencies = (
+				912537E92EA7B37800499123 /* InputMask */,
 			);
 			productName = "app-free";
 			productReference = D3C5B8402EA165670064FD23 /* app-free.app */;
@@ -114,6 +120,9 @@
 			);
 			mainGroup = D3C5B8372EA165660064FD23;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3C5B8412EA165670064FD23 /* Products */;
 			projectDirPath = "";
@@ -338,6 +347,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RedMadRobot/input-mask-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		912537E92EA7B37800499123 /* InputMask */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */;
+			productName = InputMask;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D3C5B8382EA165660064FD23 /* Project object */;
 }
