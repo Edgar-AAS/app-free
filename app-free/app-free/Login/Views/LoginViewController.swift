@@ -36,6 +36,5 @@ extension LoginViewController: LoginScreenDelegate {
     func didTapSignUp() {
         let signUpVC = SignUpViewController()
         navigationController?.pushViewController(signUpVC, animated: true)
-        print("Botão apertado")
     }
 }
