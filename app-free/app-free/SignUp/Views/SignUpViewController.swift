@@ -116,7 +116,7 @@ extension SignUpViewController {
     private func shake(view: UIView) {
         
         guard !view.frame.isEmpty, view.frame.width > 0, view.frame.height > 0 else {
-            print("Skipping shake for view with invalid frame: $$ view)")
+            print("Skipping shake for view with invalid frame: \(view)")
             return
         }
         
