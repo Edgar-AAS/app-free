@@ -57,6 +57,7 @@ class LoginScreen: UIView {
         
         button.setTitle("ENTRAR", for: .normal)
         button.setTitleColor(UIColor(hexString: "0142D4"), for: .normal)
+        button.titleLabel?.font = font
         
         button.backgroundColor = .white
                     

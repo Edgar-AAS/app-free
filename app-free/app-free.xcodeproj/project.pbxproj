@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		912537EA2EA7B37800499123 /* InputMask in Frameworks */ = {isa = PBXBuildFile; productRef = 912537E92EA7B37800499123 /* InputMask */; };
+		91577B1C2EAC56E200A785D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 91577B1B2EAC56DB00A785D4 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		91577B1B2EAC56DB00A785D4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3C5B8402EA165670064FD23 /* app-free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "app-free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -55,6 +57,7 @@
 		D3C5B8372EA165660064FD23 = {
 			isa = PBXGroup;
 			children = (
+				91577B1B2EAC56DB00A785D4 /* .gitignore */,
 				D3C5B8422EA165670064FD23 /* app-free */,
 				D3C5B8412EA165670064FD23 /* Products */,
 				91154FF52EA2993D00659A6F /* Commons */,
@@ -138,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91577B1C2EAC56E200A785D4 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

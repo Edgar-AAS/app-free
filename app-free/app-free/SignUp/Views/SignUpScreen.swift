@@ -15,7 +15,7 @@ class SignUpScreen: UIView {
     private var birthdayListener: MaskedTextInputListener!
     private var cpfListener: MaskedTextInputListener!
     private var phoneListener: MaskedTextInputListener!
-    
+    private var keyboardHandler: KeyboardHandler?
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -178,6 +178,7 @@ class SignUpScreen: UIView {
         phoneTextField.delegate = phoneListener
         
         setupView()
+  
     }
     
     required init?(coder: NSCoder) {
@@ -203,11 +204,17 @@ class SignUpScreen: UIView {
         }
         delegate?.textDidChange()
     }
-    
+
     func setEmailCheckmarksVisible(_ isVisible: Bool) {
         emailCheckmarkImageView.isHidden = !isVisible
         emailConfirmationCheckmarkImageView.isHidden = !isVisible
     }
+    
+    func setupKeyboardHandler() {
+        scrollView.keyboardDismissMode = .onDrag
+        keyboardHandler = KeyboardHandler(scrollView: scrollView)
+    }
+
 }
 
 extension SignUpScreen: CodeView {
@@ -367,7 +374,7 @@ extension SignUpScreen: CodeView {
             size: .init(width: 20, height: 14)
         )
         emailConfirmationCheckmarkImageView.centerYAnchor.constraint(equalTo: emailConfirmationTextField.centerYAnchor).isActive = true
-        
+                
     }
     
 }

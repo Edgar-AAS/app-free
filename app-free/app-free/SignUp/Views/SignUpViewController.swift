@@ -25,13 +25,16 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         screen?.delegate = self
-        viewModel.delegate = self
+        viewModel.delegate = self        
+
+        screen?.setupKeyboardHandler()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
 }
 
 extension SignUpViewController: SignUpScreenDelegate {
