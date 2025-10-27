@@ -12,7 +12,6 @@ class BottomSheetViewController: UIViewController {
     
     // Dados que vão aparecer na lista
     var items: [String] = []
-    var isCity: Bool = false
     
     // Callback quando selecionar um item
     var onItemSelected: ((String) -> Void)?
