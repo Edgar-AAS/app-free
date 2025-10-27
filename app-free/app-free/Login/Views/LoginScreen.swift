@@ -9,6 +9,8 @@ import UIKit
 
 class LoginScreen: UIView {
     
+    weak var signUpDelegate: LoginScreenDelegate?
+    
     lazy var subImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +32,7 @@ class LoginScreen: UIView {
         label.textColor = .white
         label.text = "Bem Vindo!"
 
-        let fontSize: CGFloat = 30
+        let fontSize: CGFloat = DeviceSizeAdapter.constraintValue(se: 26, iPhone: 30, iPad: 50)
         let font = UIFont(name: "OpenSans-Bold", size: fontSize)
         ?? UIFont.systemFont(ofSize: fontSize, weight: .bold)
         label.font = font
@@ -38,29 +40,10 @@ class LoginScreen: UIView {
         return label
     }()
     
-    lazy var signUpButton: UIButton = {
-        let button = UIButton(type: .system)
+    lazy var signUpButton: CustomFilledButton = {
+        let button = CustomFilledButton(title: "CADASTRAR")
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        let fontSize: CGFloat = 16
-        let font = UIFont(name: "OpenSans-SemiBold", size: fontSize) ??
-        UIFont.systemFont(ofSize: fontSize, weight: .semibold)
-        
-        button.setTitle("CADASTRAR", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        
-        button.backgroundColor = UIColor(hexString: "0142D4")
-                    
-        button.layer.cornerRadius = 27
-        button.clipsToBounds = false
-        
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.25
-        button.layer.shadowOffset = CGSize(width: 0, height: 4)
-        button.layer.shadowRadius = 4
-      
-        button.titleLabel?.textAlignment = .center
-        
+        button.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
         return button
     }()
 
@@ -74,6 +57,7 @@ class LoginScreen: UIView {
         
         button.setTitle("ENTRAR", for: .normal)
         button.setTitleColor(UIColor(hexString: "0142D4"), for: .normal)
+        button.titleLabel?.font = font
         
         button.backgroundColor = .white
                     
@@ -109,16 +93,16 @@ class LoginScreen: UIView {
             self.subImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.subImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.subImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            
-            self.logoAppImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 123),
+                        
+            self.logoAppImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 70, iPhone: 123, iPad: 123)),
             self.logoAppImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.logoAppImageView.widthAnchor.constraint(equalToConstant: 59),
-            self.logoAppImageView.heightAnchor.constraint(equalToConstant: 62.28),
+            self.logoAppImageView.widthAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
+            self.logoAppImageView.heightAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
             
-            self.loginLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 210),
+            self.loginLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 150, iPhone: 210, iPad: 300)),
             self.loginLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
-            self.signUpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 673),
+            self.signUpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 500, iPhone: 673, iPad: 1100)),
             self.signUpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.signUpButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.signUpButton.heightAnchor.constraint(equalToConstant: 54),
@@ -131,6 +115,8 @@ class LoginScreen: UIView {
         ])
     }
     
-
+    @objc private func didTapSignUp() {
+        signUpDelegate?.didTapSignUp()       
+    }
 
 }
