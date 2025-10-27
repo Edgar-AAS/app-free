@@ -98,6 +98,38 @@ class AddressFormViewController: UIViewController {
             print("Campos preenchidos com sucesso")
         }
         
+    }
+    
+    private func showAlert(title: String = "Atenção", message: String) {
+        let alert = UIAlertController(title: title,
+                                       message: message,
+                                       preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+
+    private func setupBindings() {
+        addressView?.onZipCodeChanged = { [weak self] zipCode in
+            self?.viewModel.searchZipCode(zipCode)
+        }
+        
+        addressView?.onTapStateButton = { [weak self] in
+            self?.showStateBottomSheet()
+        }
+        
+        addressView?.onTapCityButton = { [weak self] in
+            self?.showCityBottomSheet()
+        }
+        
+        addressView?.onTapContinue = { [weak self] in
+            self?.showHandleContinue()
+        }
+        
+        addressView?.onTapArrow = { [weak self] in
+            self?.showHadleArrow()
+        }
+        
         // PARA ERROS EM RETORNO DE CEP
         viewModel.onCEPError = { [weak self] errorMessage in
             guard let self = self,
@@ -141,38 +173,6 @@ class AddressFormViewController: UIViewController {
             }
             
             present(citiesBottomSheet, animated: true)
-        }
-        
-    }
-    
-    private func showAlert(title: String = "Atenção", message: String) {
-        let alert = UIAlertController(title: title,
-                                       message: message,
-                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
-
-
-    private func setupBindings() {
-        addressView?.onZipCodeChanged = { [weak self] zipCode in
-            self?.viewModel.searchZipCode(zipCode)
-        }
-        
-        addressView?.onTapStateButton = { [weak self] in
-            self?.showStateBottomSheet()
-        }
-        
-        addressView?.onTapCityButton = { [weak self] in
-            self?.showCityBottomSheet()
-        }
-        
-        addressView?.onTapContinue = { [weak self] in
-            self?.showHandleContinue()
-        }
-        
-        addressView?.onTapArrow = { [weak self] in
-            self?.showHadleArrow()
         }
     }
 }
