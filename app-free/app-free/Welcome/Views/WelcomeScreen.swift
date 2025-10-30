@@ -1,5 +1,5 @@
 //
-//  LoginScreen.swift
+//  WelcomeScreen.swift
 //  app-free
 //
 //  Created by Lidia on 17/10/25.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-class LoginScreen: UIView {
+class WelcomeScreen: UIView {
     
-    weak var signUpDelegate: LoginScreenDelegate?
+    weak var signUpDelegate: WelcomeScreenDelegate?
     
     lazy var subImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "LoginBackground")
+        image.image = UIImage(named: "WelcomeBackground")
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -26,7 +26,7 @@ class LoginScreen: UIView {
         return image
     }()
     
-    lazy var loginLabel: UILabel = {
+    lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
@@ -76,7 +76,7 @@ class LoginScreen: UIView {
         super.init(frame: frame)
         self.addSubview(self.subImageView)
         self.addSubview(self.logoAppImageView)
-        self.addSubview(self.loginLabel)
+        self.addSubview(self.welcomeLabel)
         self.addSubview(self.signUpButton)
         self.addSubview(self.signInButton)
         self.configConstraints()
@@ -99,8 +99,8 @@ class LoginScreen: UIView {
             self.logoAppImageView.widthAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
             self.logoAppImageView.heightAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
             
-            self.loginLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 150, iPhone: 210, iPad: 300)),
-            self.loginLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 150, iPhone: 210, iPad: 300)),
+            self.welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             
             self.signUpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 500, iPhone: 673, iPad: 1100)),
             self.signUpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),

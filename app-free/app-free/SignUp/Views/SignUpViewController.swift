@@ -8,9 +8,9 @@
 import UIKit
 
 protocol SignUpScreenDelegate: AnyObject {
-    func didTapBack()
-    func didTapContinue()
-    func textDidChange()
+    func signUpScreenDidTapBack()
+    func signUpScreenDidTapContinue()
+    func signUpScreenDidChangeText()
 }
 
 class SignUpViewController: UIViewController {
@@ -39,12 +39,12 @@ class SignUpViewController: UIViewController {
 
 extension SignUpViewController: SignUpScreenDelegate {
     
-    func didTapBack() {
+    func signUpScreenDidTapBack() {
         navigationController?.popViewController(animated: true)
     }
     
-    func didTapContinue() {        
-        textDidChange()
+    func signUpScreenDidTapContinue() {        
+        signUpScreenDidChangeText()
         let result = viewModel.continueButtonTapped()
         switch result {
             case .success(let userInfo):
@@ -56,7 +56,7 @@ extension SignUpViewController: SignUpScreenDelegate {
         }
     }
     
-    func textDidChange() {
+    func signUpScreenDidChangeText() {
         guard let screen = screen else { return }
         
         viewModel.updateForm(
@@ -84,50 +84,36 @@ extension SignUpViewController {
         guard let screen = screen else { return }
        
         if screen.fullNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.fullNameTextField)
+            screen.fullNameTextField.shake()
         }
         if screen.birthdayTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.birthdayTextField)
+            screen.birthdayTextField.shake()
         }
         if screen.CPFTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.CPFTextField)
+            screen.CPFTextField.shake()
         }
         if screen.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.emailTextField)
+            screen.emailTextField.shake()
         }
         if screen.emailConfirmationTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.emailConfirmationTextField)
+            screen.emailConfirmationTextField.shake()
         }
         
         let email = screen.emailTextField.text ?? ""
         let confirm = screen.emailConfirmationTextField.text ?? ""
         
         if !email.isEmpty && !confirm.isEmpty && email != confirm {
-            shake(view: screen.emailTextField)
-            shake(view: screen.emailConfirmationTextField)
+            screen.emailTextField.shake()
+            screen.emailConfirmationTextField.shake()
         }
         
         if screen.phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-            shake(view: screen.phoneTextField)
+            screen.phoneTextField.shake()
         }
         
         if !screen.checkboxButton.isSelected {
-            shake(view: screen.checkboxButton)
+            screen.checkboxButton.shake()
         }
-    }
-    
-    private func shake(view: UIView) {
-        
-        guard !view.frame.isEmpty, view.frame.width > 0, view.frame.height > 0 else {
-            print("Skipping shake for view with invalid frame: \(view)")
-            return
-        }
-        
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        animation.timingFunction = CAMediaTimingFunction(name: .linear)
-        animation.duration = 0.4
-        animation.values = [-10, 10, -8, 8, -5, 5, 0]
-        view.layer.add(animation, forKey: "shake")
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  WelcomeViewController.swift
 //  app-free
 //
 //  Created by Lidia on 17/10/25.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol LoginScreenDelegate: AnyObject {
+protocol WelcomeScreenDelegate: AnyObject {
     func didTapSignUp()
 }
 
-class LoginViewController: UIViewController {
+class WelcomeViewController: UIViewController {
     
-    var screen: LoginScreen?
+    var screen: WelcomeScreen?
     
     override func loadView() {
-        self.screen = LoginScreen()
+        self.screen = WelcomeScreen()
         self.view = self.screen
         self.view.backgroundColor = .white
     }
@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: LoginScreenDelegate {
+extension WelcomeViewController: WelcomeScreenDelegate {
     
     func didTapSignUp() {
         let signUpVC = SignUpViewController()
