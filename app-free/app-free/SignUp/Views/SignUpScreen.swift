@@ -155,6 +155,8 @@ class SignUpScreen: UIView {
         return button
     }()
     
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)        
         
@@ -238,7 +240,7 @@ extension SignUpScreen: CodeView {
         emailConfirmationTextField.addSubview(emailConfirmationCheckmarkImageView)
     }
     
-    func setupConstrains() {
+    func setupConstraints() {
         let safeArea = safeAreaLayoutGuide
         
         scrollView.fillConstraints(

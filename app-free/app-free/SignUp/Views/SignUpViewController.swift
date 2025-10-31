@@ -50,6 +50,21 @@ extension SignUpViewController: SignUpScreenDelegate {
             case .success(let userInfo):
                 print("✅ Formulário preenchido com sucesso! Informações do Usuário:")
                 print(userInfo)
+            let dataSignUp = SignUpForm(
+                fullName: screen?.fullNameTextField.text,
+                    birthday: screen?.birthdayTextField.text,
+                    cpf: screen?.CPFTextField.text,
+                    email: screen?.emailTextField.text,
+                    emailConfirmation: screen?.emailConfirmationTextField.text,
+                    phone: screen?.phoneTextField.text
+                )
+                
+                // Cria a tela de senha e PASSA os dados
+                let passwordVC = PasswordFormViewController()
+                passwordVC.signUpModel = dataSignUp
+                
+                navigationController?.pushViewController(passwordVC, animated: true)
+            
             case .failure(let message):
                 presentAlert(message)
                 shakeInvalidFields()
