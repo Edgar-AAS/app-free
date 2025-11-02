@@ -27,11 +27,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		91154FF52EA2993D00659A6F /* Commons */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Commons;
-			sourceTree = "<group>";
-		};
 		D3C5B8422EA165670064FD23 /* app-free */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -60,7 +55,6 @@
 				91577B1B2EAC56DB00A785D4 /* .gitignore */,
 				D3C5B8422EA165670064FD23 /* app-free */,
 				D3C5B8412EA165670064FD23 /* Products */,
-				91154FF52EA2993D00659A6F /* Commons */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,7 +82,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				91154FF52EA2993D00659A6F /* Commons */,
 				D3C5B8422EA165670064FD23 /* app-free */,
 			);
 			name = "app-free";
