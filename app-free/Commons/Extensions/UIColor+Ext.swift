@@ -1,5 +1,12 @@
+//
+//  UIColor+Ext.swift
+//  app-free
+//
+//  Created by Lidia on 17/10/25.
+//
+
 import UIKit
- 
+
 extension UIColor {
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

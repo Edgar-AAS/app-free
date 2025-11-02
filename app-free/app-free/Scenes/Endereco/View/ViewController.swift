@@ -21,5 +21,4 @@ class ViewController: UIViewController {
         let vc = AddressFormViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
 }

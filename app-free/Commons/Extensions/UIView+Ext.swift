@@ -1,3 +1,10 @@
+//
+//  UIView.swift
+//  app-free
+//
+//  Created by Lidia on 21/10/25.
+//
+
 import UIKit
 
 extension UIView {

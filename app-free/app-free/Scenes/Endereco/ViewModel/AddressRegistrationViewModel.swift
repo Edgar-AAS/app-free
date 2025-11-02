@@ -226,12 +226,3 @@ class AddressRegistrationViewModel {
     
     }
 }
-
-private struct StateResponse: Codable {
-    let sigla: String
-    let nome: String
-}
-
-private struct CityResponse: Codable {
-    let nome: String
-}

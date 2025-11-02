@@ -6,6 +6,7 @@
 //
 import Foundation
 import UIKit
+
 class AddressRegistrationView: UIView {
     
     var onZipCodeChanged: ((String) -> Void)?
