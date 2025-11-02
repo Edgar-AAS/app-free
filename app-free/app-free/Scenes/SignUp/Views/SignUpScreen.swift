@@ -223,7 +223,6 @@ class SignUpScreen: UIView {
 }
 
 extension SignUpScreen: CodeView {
-    
     func buildViewHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(containerView)

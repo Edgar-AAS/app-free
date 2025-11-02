@@ -1,12 +1,16 @@
-# Xcode
-*.xcuserdata/
-*.xcuserdatad/
-*.xcuserstate
-*.xcscmblueprint
-project.xcworkspace/
-
 # macOS
 .DS_Store
+
+# Xcode
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+*.xcuserdatad
+xcuserdata/
+DerivedData/
+build/
+.idea/
 
 # Swift Package Manager
 /.build/

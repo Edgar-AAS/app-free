@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "fi-rr-arrow-left.svg",
+      "filename" : "fi-rr-search.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "fi-rr-arrow-left.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
