@@ -15,7 +15,6 @@
 		84D351E62EB4FD54006AC8CA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 84D351E52EB4FD54006AC8CA /* FirebaseDatabase */; };
 		84D351E82EB4FD54006AC8CA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 84D351E72EB4FD54006AC8CA /* FirebaseFirestore */; };
 		84D351EA2EB4FD54006AC8CA /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 84D351E92EB4FD54006AC8CA /* FirebaseFirestoreCombine-Community */; };
-		912537EA2EA7B37800499123 /* InputMask in Frameworks */ = {isa = PBXBuildFile; productRef = 912537E92EA7B37800499123 /* InputMask */; };
 		91577B1C2EAC56E200A785D4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 91577B1B2EAC56DB00A785D4 /* .gitignore */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D3C5B8522EA165680064FD23 /* Exceptions for "app-free" folder in "app-free" target */ = {
+		8448E7A22EAFA6EE005BDCD5 /* Exceptions for "app-free" folder in "app-free" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -36,15 +35,10 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		91154FF52EA2993D00659A6F /* Commons */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Commons;
-			sourceTree = "<group>";
-		};
 		D3C5B8422EA165670064FD23 /* app-free */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D3C5B8522EA165680064FD23 /* Exceptions for "app-free" folder in "app-free" target */,
+				8448E7A22EAFA6EE005BDCD5 /* Exceptions for "app-free" folder in "app-free" target */,
 			);
 			path = "app-free";
 			sourceTree = "<group>";
@@ -61,7 +55,6 @@
 				84D351DE2EB4FD54006AC8CA /* FirebaseAnalytics in Frameworks */,
 				84D351E42EB4FD54006AC8CA /* FirebaseCore in Frameworks */,
 				84D351E02EB4FD54006AC8CA /* FirebaseAuth in Frameworks */,
-				912537EA2EA7B37800499123 /* InputMask in Frameworks */,
 				84D351E22EB4FD54006AC8CA /* FirebaseAuthCombine-Community in Frameworks */,
 				84D351E82EB4FD54006AC8CA /* FirebaseFirestore in Frameworks */,
 			);
@@ -76,7 +69,6 @@
 				91577B1B2EAC56DB00A785D4 /* .gitignore */,
 				D3C5B8422EA165670064FD23 /* app-free */,
 				D3C5B8412EA165670064FD23 /* Products */,
-				91154FF52EA2993D00659A6F /* Commons */,
 				84D351DA2EB4FC37006AC8CA /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
@@ -105,12 +97,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				91154FF52EA2993D00659A6F /* Commons */,
 				D3C5B8422EA165670064FD23 /* app-free */,
 			);
 			name = "app-free";
 			packageProductDependencies = (
-				912537E92EA7B37800499123 /* InputMask */,
 				84D351DD2EB4FD54006AC8CA /* FirebaseAnalytics */,
 				84D351DF2EB4FD54006AC8CA /* FirebaseAuth */,
 				84D351E12EB4FD54006AC8CA /* FirebaseAuthCombine-Community */,
@@ -148,7 +138,6 @@
 			mainGroup = D3C5B8372EA165660064FD23;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */,
 				84D351DC2EB4FD54006AC8CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -387,14 +376,6 @@
 				minimumVersion = 12.5.0;
 			};
 		};
-		912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RedMadRobot/input-mask-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.3.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -432,11 +413,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 84D351DC2EB4FD54006AC8CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreCombine-Community";
-		};
-		912537E92EA7B37800499123 /* InputMask */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 912537E82EA7B37800499123 /* XCRemoteSwiftPackageReference "input-mask-ios" */;
-			productName = InputMask;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
