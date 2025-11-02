@@ -17,7 +17,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D3C5B8522EA165680064FD23 /* Exceptions for "app-free" folder in "app-free" target */ = {
+		8448E7A22EAFA6EE005BDCD5 /* Exceptions for "app-free" folder in "app-free" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -30,7 +30,7 @@
 		D3C5B8422EA165670064FD23 /* app-free */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D3C5B8522EA165680064FD23 /* Exceptions for "app-free" folder in "app-free" target */,
+				8448E7A22EAFA6EE005BDCD5 /* Exceptions for "app-free" folder in "app-free" target */,
 			);
 			path = "app-free";
 			sourceTree = "<group>";
