@@ -218,7 +218,6 @@ class SignUpScreen: UIView {
 }
 
 extension SignUpScreen: CodeView {
-    
     func buildViewHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -238,7 +237,7 @@ extension SignUpScreen: CodeView {
         emailConfirmationTextField.addSubview(emailConfirmationCheckmarkImageView)
     }
     
-    func setupConstrains() {
+    func setupConstraints() {
         let safeArea = safeAreaLayoutGuide
         
         scrollView.fillConstraints(
