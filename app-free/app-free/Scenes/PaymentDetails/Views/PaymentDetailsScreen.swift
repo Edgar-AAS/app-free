@@ -78,13 +78,11 @@ class PaymentDetailsScreen: UIView {
     }()
 
     lazy var bankTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Selecione ou busque um banco")
-
+        let textField = CustomTextField(type: .default(placeholder: "Selecione ou busque um banco"))
         textField.backgroundColor = .clear
         textField.borderStyle = .none
         textField.layer.cornerRadius = 0
         textField.clipsToBounds = false
-        
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
@@ -104,14 +102,13 @@ class PaymentDetailsScreen: UIView {
     }()
     
     lazy var agencyTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Agência (4 dígitos)")
-        textField.keyboardType = .numberPad
+        let textField = CustomTextField(type: .numeric(placeholder: "Agência (4 dígitos)"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
     lazy var accountTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Conta com dígito")
+        let textField = CustomTextField(type:.default(placeholder: "Conta com dígito"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
@@ -138,7 +135,7 @@ class PaymentDetailsScreen: UIView {
     }()
     
     lazy var pixTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Chave PIX")
+        let textField = CustomTextField(type:.default(placeholder: "Chave PIX"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()

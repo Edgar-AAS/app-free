@@ -6,15 +6,10 @@
 //
 
 import UIKit
-import InputMask
 
 class SignUpScreen: UIView {
     
     weak var delegate: SignUpScreenDelegate?
-    
-    private var birthdayListener: MaskedTextInputListener!
-    private var cpfListener: MaskedTextInputListener!
-    private var phoneListener: MaskedTextInputListener!
     private var keyboardHandler: KeyboardHandler?
     
     private lazy var scrollView: UIScrollView = {
@@ -58,60 +53,58 @@ class SignUpScreen: UIView {
     }()
     
     lazy var fullNameTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Nome completo")
+        let textField = CustomTextField(type: .default(placeholder: "Nome completo"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var birthdayTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Data de nascimento")
-        textField.keyboardType = .numberPad
+        let textField = CustomTextField(type: .date(placeholder: "Data de nascimento"))
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var CPFTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "CPF")
-        textField.keyboardType = .numberPad
+        let textField = CustomTextField(type: .cpf(placeholder: "CPF"))
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "E-mail")
-        textField.keyboardType = .emailAddress
+        let textField = CustomTextField(type: .email(placeholder: "E-mail"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailConfirmationTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Confirme seu e-mail")
-        textField.keyboardType = .emailAddress
+        let textField = CustomTextField(type: .email(placeholder: "Confirme seu e-mail"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailCheckmarkImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 10, weight: .regular))
-            imageView.image = checkImage
-            imageView.isHidden = true
-            return imageView
-        }()
-        
-        lazy var emailConfirmationCheckmarkImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
-                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 10, weight: .regular))
-            imageView.image = checkImage
-            imageView.isHidden = true
-            return imageView
-        }()
+        imageView.image = checkImage
+        imageView.isHidden = true
+        return imageView
+    }()
+    
+    lazy var emailConfirmationCheckmarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 10, weight: .regular))
+        imageView.image = checkImage
+        imageView.isHidden = true
+        return imageView
+    }()
     
     lazy var phoneTextField: CustomTextField = {
-        let textField = CustomTextField(placeholder: "Número com DD")
-        textField.keyboardType = .phonePad
+        let textField = CustomTextField(type: .cellphone(placeholder: "Número com DD"))
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
@@ -156,34 +149,12 @@ class SignUpScreen: UIView {
     lazy var continueButton: CustomFilledButton = {
         let button = CustomFilledButton(title: "CONTINUAR")
         button.addTarget(self, action: #selector(signUpScreenDidTapContinue), for: .touchUpInside)
-        
         return button
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)        
-        
-        birthdayListener = MaskedTextInputListener(primaryFormat: "[00]/[00]/[0000]")
-        birthdayListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.signUpScreenDidChangeText()
-        }
-        
-        cpfListener = MaskedTextInputListener(primaryFormat: "[000].[000].[000]-[00]")
-        cpfListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.signUpScreenDidChangeText()
-        }
-        
-        phoneListener = MaskedTextInputListener(primaryFormat: "([00]) [0][0000]-[0000]")
-        phoneListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.signUpScreenDidChangeText()
-        }
-                
-        birthdayTextField.delegate = birthdayListener
-        CPFTextField.delegate = cpfListener
-        phoneTextField.delegate = phoneListener
-        
+        super.init(frame: frame)
         setupView()
-  
     }
     
     required init?(coder: NSCoder) {
