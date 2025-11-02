@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTextField: UITextField {
+final class AFTextField: UITextField {
     
     enum TextFieldType {
         case `default`(placeholder: String)

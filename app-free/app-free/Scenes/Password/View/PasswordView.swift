@@ -45,14 +45,14 @@ class PasswordView: UIView {
         return label
     }()
     
-    lazy var passwordTextField: CustomTextField = {
-        let txt = CustomTextField(type: .password(placeholder: "Crie uma senha"))
+    lazy var passwordTextField: AFTextField = {
+        let txt = AFTextField(type: .password(placeholder: "Crie uma senha"))
         txt.translatesAutoresizingMaskIntoConstraints = false
         return txt
     }()
 
-    lazy var confirmPasswordTextField: CustomTextField = {
-        let txt = CustomTextField(type: .password(placeholder: "Confirme sua senha"))
+    lazy var confirmPasswordTextField: AFTextField = {
+        let txt = AFTextField(type: .password(placeholder: "Confirme sua senha"))
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.addTarget(self, action: #selector(validatePasswords), for: .editingDidEnd)
         return txt

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomFilledButton: UIButton {
+final class AFFilledButton: UIButton {
     init(title: String) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

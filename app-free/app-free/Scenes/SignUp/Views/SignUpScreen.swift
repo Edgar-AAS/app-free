@@ -52,32 +52,32 @@ class SignUpScreen: UIView {
         return label
     }()
     
-    lazy var fullNameTextField: CustomTextField = {
-        let textField = CustomTextField(type: .default(placeholder: "Nome completo"))
+    lazy var fullNameTextField: AFTextField = {
+        let textField = AFTextField(type: .default(placeholder: "Nome completo"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var birthdayTextField: CustomTextField = {
-        let textField = CustomTextField(type: .date(placeholder: "Data de nascimento"))
+    lazy var birthdayTextField: AFTextField = {
+        let textField = AFTextField(type: .date(placeholder: "Data de nascimento"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var CPFTextField: CustomTextField = {
-        let textField = CustomTextField(type: .cpf(placeholder: "CPF"))
+    lazy var CPFTextField: AFTextField = {
+        let textField = AFTextField(type: .cpf(placeholder: "CPF"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var emailTextField: CustomTextField = {
-        let textField = CustomTextField(type: .email(placeholder: "E-mail"))
+    lazy var emailTextField: AFTextField = {
+        let textField = AFTextField(type: .email(placeholder: "E-mail"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
-    lazy var emailConfirmationTextField: CustomTextField = {
-        let textField = CustomTextField(type: .email(placeholder: "Confirme seu e-mail"))
+    lazy var emailConfirmationTextField: AFTextField = {
+        let textField = AFTextField(type: .email(placeholder: "Confirme seu e-mail"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -102,8 +102,8 @@ class SignUpScreen: UIView {
         return imageView
     }()
     
-    lazy var phoneTextField: CustomTextField = {
-        let textField = CustomTextField(type: .cellphone(placeholder: "Número com DD"))
+    lazy var phoneTextField: AFTextField = {
+        let textField = AFTextField(type: .cellphone(placeholder: "Número com DD"))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -146,8 +146,8 @@ class SignUpScreen: UIView {
         return label
     }()
     
-    lazy var continueButton: CustomFilledButton = {
-        let button = CustomFilledButton(title: "CONTINUAR")
+    lazy var continueButton: AFFilledButton = {
+        let button = AFFilledButton(title: "CONTINUAR")
         button.addTarget(self, action: #selector(signUpScreenDidTapContinue), for: .touchUpInside)
         return button
     }()

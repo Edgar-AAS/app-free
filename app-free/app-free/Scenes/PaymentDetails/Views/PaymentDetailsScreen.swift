@@ -77,8 +77,8 @@ class PaymentDetailsScreen: UIView {
         return view
     }()
 
-    lazy var bankTextField: CustomTextField = {
-        let textField = CustomTextField(type: .default(placeholder: "Selecione ou busque um banco"))
+    lazy var bankTextField: AFTextField = {
+        let textField = AFTextField(type: .default(placeholder: "Selecione ou busque um banco"))
         textField.backgroundColor = .clear
         textField.borderStyle = .none
         textField.layer.cornerRadius = 0
@@ -101,14 +101,14 @@ class PaymentDetailsScreen: UIView {
         return picker
     }()
     
-    lazy var agencyTextField: CustomTextField = {
-        let textField = CustomTextField(type: .numeric(placeholder: "Agência (4 dígitos)"))
+    lazy var agencyTextField: AFTextField = {
+        let textField = AFTextField(type: .numeric(placeholder: "Agência (4 dígitos)"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
-    lazy var accountTextField: CustomTextField = {
-        let textField = CustomTextField(type:.default(placeholder: "Conta com dígito"))
+    lazy var accountTextField: AFTextField = {
+        let textField = AFTextField(type:.default(placeholder: "Conta com dígito"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
@@ -122,26 +122,26 @@ class PaymentDetailsScreen: UIView {
         return label
     }()
    
-    lazy var individualButton: RadioButton = {
-        let button = RadioButton(title: "Pessoa Física")
+    lazy var individualButton: AFRadioButton = {
+        let button = AFRadioButton(title: "Pessoa Física")
         button.addTarget(self, action: #selector(accountTypeSelected(_:)), for: .touchUpInside)
         return button
     }()
 
-    lazy var businessButton: RadioButton = {
-        let button = RadioButton(title: "Pessoa Jurídica")
+    lazy var businessButton: AFRadioButton = {
+        let button = AFRadioButton(title: "Pessoa Jurídica")
         button.addTarget(self, action: #selector(accountTypeSelected(_:)), for: .touchUpInside)
         return button
     }()
     
-    lazy var pixTextField: CustomTextField = {
-        let textField = CustomTextField(type:.default(placeholder: "Chave PIX"))
+    lazy var pixTextField: AFTextField = {
+        let textField = AFTextField(type:.default(placeholder: "Chave PIX"))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
-    lazy var continueButton: CustomFilledButton = {
-        let button = CustomFilledButton(title: "CONTINUAR")
+    lazy var continueButton: AFFilledButton = {
+        let button = AFFilledButton(title: "CONTINUAR")
         button.addTarget(self, action: #selector(paymentDetailsScreenDidTapContinue), for: .touchUpInside)
         return button
     }()
@@ -239,7 +239,7 @@ class PaymentDetailsScreen: UIView {
     }
 
     @objc private func accountTypeSelected(_ sender: UIButton) {
-        guard let radio = sender as? RadioButton else { return }        
+        guard let radio = sender as? AFRadioButton else { return }        
         let type: AccountType = radio === individualButton ? .individual : .business
         viewModel?.updateAccountType(type)
     }

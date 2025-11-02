@@ -40,8 +40,8 @@ class WelcomeScreen: UIView {
         return label
     }()
     
-    lazy var signUpButton: CustomFilledButton = {
-        let button = CustomFilledButton(title: "CADASTRAR")
+    lazy var signUpButton: AFFilledButton = {
+        let button = AFFilledButton(title: "CADASTRAR")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
         return button

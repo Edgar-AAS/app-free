@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RadioButton: UIButton {
+final class AFRadioButton: UIButton {
     
     init(title: String) {
         super.init(frame: .zero)
@@ -86,20 +86,20 @@ class RadioButton: UIButton {
 
 
 final class RadioButtonGroup {
-    private var buttons: [RadioButton] = []
+    private var buttons: [AFRadioButton] = []
     
-    func add(_ button: RadioButton) {
+    func add(_ button: AFRadioButton) {
         buttons.append(button)
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
     }
     
-    @objc private func buttonTapped(_ sender: RadioButton) {
+    @objc private func buttonTapped(_ sender: AFRadioButton) {
         buttons.forEach { $0.isSelected = ($0 === sender) }
     }
 }
 
 extension RadioButtonGroup {
-    func add(_ buttons: RadioButton...) {
+    func add(_ buttons: AFRadioButton...) {
         buttons.forEach(add)
     }
 }
