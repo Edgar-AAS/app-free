@@ -78,7 +78,8 @@ class KeyboardHandler {
         else { return }
 
         let kbFrame = kbFrameValue.cgRectValue
-        let kbHeight = showing ? kbFrame.height : 0
+        let safeAreaBottom = view.safeAreaInsets.bottom
+        let kbHeight = showing ? kbFrame.height - safeAreaBottom : 0
        
         if let bottomConstraint = bottomConstraint {
             bottomConstraint.constant = -(kbHeight + extraSpacing)

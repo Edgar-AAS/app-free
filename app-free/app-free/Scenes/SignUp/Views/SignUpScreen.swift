@@ -38,7 +38,7 @@ class SignUpScreen: UIView {
         
         button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
         button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpScreenDidTapBack), for: .touchUpInside)
         
         return button
     }()
@@ -65,22 +65,26 @@ class SignUpScreen: UIView {
     
     lazy var birthdayTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Data de nascimento")
+        textField.keyboardType = .numberPad
         return textField
     }()
     
     lazy var CPFTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "CPF")
+        textField.keyboardType = .numberPad
         return textField
     }()
     
     lazy var emailTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "E-mail")
+        textField.keyboardType = .emailAddress
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailConfirmationTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Confirme seu e-mail")
+        textField.keyboardType = .emailAddress
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -107,6 +111,7 @@ class SignUpScreen: UIView {
     
     lazy var phoneTextField: CustomTextField = {
         let textField = CustomTextField(placeholder: "Número com DD")
+        textField.keyboardType = .phonePad
         return textField
     }()
     
@@ -150,7 +155,7 @@ class SignUpScreen: UIView {
     
     lazy var continueButton: CustomFilledButton = {
         let button = CustomFilledButton(title: "CONTINUAR")
-        button.addTarget(self, action: #selector(didTapContinue), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpScreenDidTapContinue), for: .touchUpInside)
         
         return button
     }()
@@ -160,17 +165,17 @@ class SignUpScreen: UIView {
         
         birthdayListener = MaskedTextInputListener(primaryFormat: "[00]/[00]/[0000]")
         birthdayListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.textDidChange()
+            self?.delegate?.signUpScreenDidChangeText()
         }
         
         cpfListener = MaskedTextInputListener(primaryFormat: "[000].[000].[000]-[00]")
         cpfListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.textDidChange()
+            self?.delegate?.signUpScreenDidChangeText()
         }
         
         phoneListener = MaskedTextInputListener(primaryFormat: "([00]) [0][0000]-[0000]")
         phoneListener.onMaskedTextChangedCallback = { [weak self] _, _, _, _ in
-            self?.delegate?.textDidChange()
+            self?.delegate?.signUpScreenDidChangeText()
         }
                 
         birthdayTextField.delegate = birthdayListener
@@ -185,24 +190,24 @@ class SignUpScreen: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc private func didTapBack() {
-        delegate?.didTapBack()
+    @objc private func signUpScreenDidTapBack() {
+        delegate?.signUpScreenDidTapBack()
     }
     
     @objc private func toggleCheckbox() {
         checkboxButton.isSelected = !checkboxButton.isSelected
-        delegate?.textDidChange()
+        delegate?.signUpScreenDidChangeText()
     }
     
-    @objc private func didTapContinue() {
-        delegate?.didTapContinue()
+    @objc private func signUpScreenDidTapContinue() {
+        delegate?.signUpScreenDidTapContinue()
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         if textField == emailTextField || textField == emailConfirmationTextField {
             textField.text = textField.text?.lowercased()
         }
-        delegate?.textDidChange()
+        delegate?.signUpScreenDidChangeText()
     }
 
     func setEmailCheckmarksVisible(_ isVisible: Bool) {

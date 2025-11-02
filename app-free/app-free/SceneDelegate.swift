@@ -20,7 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appWindow = UIWindow(frame: windowScene.coordinateSpace.bounds)
         appWindow.windowScene = windowScene
         
-        let viewController = LoginViewController()
+        
+        //MARK: Adicione aqui o LoginViewController
+        let viewController = WelcomeViewController()
+        //let viewController = SignUpViewController()
+        //let viewController = PaymentDetailsViewController()
+        // viewController.view.backgroundColor = .darkGray
         let navigationController = UINavigationController(rootViewController: viewController)
         appWindow.rootViewController = navigationController
         appWindow.makeKeyAndVisible()
@@ -57,3 +62,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
 }
+
