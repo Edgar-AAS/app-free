@@ -32,3 +32,27 @@ class CustomTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension CustomTextField {
+    
+    func setupEyeButton() {
+        
+        let eyeButton = UIButton(type: .custom)
+        eyeButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        eyeButton.setImage(UIImage(systemName: "eye"), for: .selected)
+        eyeButton.tintColor = UIColor(hexString: "0451FF")
+                
+        eyeButton.addAction(UIAction { [weak self] _ in
+            eyeButton.isSelected.toggle()
+            self?.isSecureTextEntry = !eyeButton.isSelected
+        }, for: .touchUpInside)
+       
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
+        container.addSubview(eyeButton)
+        eyeButton.center = container.center
+                
+        self.rightView = container
+        self.rightViewMode = .always
+    }
+}

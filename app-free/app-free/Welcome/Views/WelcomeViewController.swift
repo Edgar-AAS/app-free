@@ -8,7 +8,8 @@
 import UIKit
 
 protocol WelcomeScreenDelegate: AnyObject {
-    func didTapSignUp()
+    func welcomeScreenDidTapLogin()
+    func welcomeScreenDidTapSignUp()
 }
 
 class WelcomeViewController: UIViewController {
@@ -33,7 +34,12 @@ class WelcomeViewController: UIViewController {
 
 extension WelcomeViewController: WelcomeScreenDelegate {
     
-    func didTapSignUp() {
+    func welcomeScreenDidTapLogin() {
+        let loginVC = LoginViewController()
+        navigationController?.pushViewController(loginVC, animated: true)
+    }
+    
+    func welcomeScreenDidTapSignUp() {
         let signUpVC = SignUpViewController()
         navigationController?.pushViewController(signUpVC, animated: true)
     }
