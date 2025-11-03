@@ -59,11 +59,11 @@ extension SignUpViewController: SignUpScreenDelegate {
                     phone: screen?.phoneTextField.text
                 )
                 
-                // Cria a tela de senha e PASSA os dados
-                let passwordVC = PasswordFormViewController()
-                passwordVC.signUpModel = dataSignUp
-                
-                navigationController?.pushViewController(passwordVC, animated: true)
+            // Cria a tela de senha e PASSA os dados
+            let addressVC = AddressFormViewController()
+            addressVC.signUpModel = dataSignUp
+            navigationController?.pushViewController(addressVC, animated: true)
+
             
             case .failure(let message):
                 presentAlert(message)

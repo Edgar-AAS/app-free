@@ -18,6 +18,7 @@ class AddressFormViewController: UIViewController {
     private let viewModel = AddressRegistrationViewModel()
     
     var bottomSheet = BottomSheetViewController()
+    var signUpModel: SignUpForm?
    
     private var addressView: AddressRegistrationView? {
         return view as? AddressRegistrationView
@@ -74,7 +75,9 @@ class AddressFormViewController: UIViewController {
         }
         
         if !hasErrors {
-            // TODO: será implementado após a entrega das outras telas
+            let paymentVC = PaymentDetailsViewController()
+            paymentVC.signUpModel = self.signUpModel
+            navigationController?.pushViewController(paymentVC, animated: true)
             print("Navegando para a próxima tela")
         }
     }

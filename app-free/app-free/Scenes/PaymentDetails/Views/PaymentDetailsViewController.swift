@@ -15,6 +15,7 @@ protocol PaymentDetailsScreenDelegate: AnyObject {
 class PaymentDetailsViewController: UIViewController {
     var screen: PaymentDetailsScreen?
     private let viewModel = PaymentDetailsViewModel()
+    var signUpModel: SignUpForm?
 
     override func loadView() {
         screen = PaymentDetailsScreen()
@@ -65,6 +66,10 @@ extension PaymentDetailsViewController: PaymentDetailsScreenDelegate {
         let result = viewModel.continueButtonTapped()
         switch result {
         case .success(let info):
+            let passwordVC = PasswordFormViewController()
+            passwordVC.signUpModel = self.signUpModel
+            navigationController?.pushViewController(passwordVC, animated: true)
+            
             print("✅ Dados bancários configurados com sucesso!")
             print(info)
         case .failure(let message):
