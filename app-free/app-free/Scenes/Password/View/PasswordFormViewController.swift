@@ -102,7 +102,7 @@ class PasswordFormViewController: UIViewController {
     private func showHandleEnd() {
         Task {
             do {
-                try await viewModel.saveUsersFirebase(
+                try await viewModel.registerUser(
                     password: passwordView?.passwordTextField.text,
                     email: signUpModel?.email
                 )
