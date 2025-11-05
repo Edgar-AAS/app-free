@@ -12,66 +12,80 @@ final class AddressRegistrationViewModel {
 
     //callback de validacao
     var onValidationError: ((String) -> Void)?
+    var onValidationSuccess: (() -> Void)?
     
     private var originalAddress: Address?
     
-    private let fetchAddressUseCase: FetchAddressUseCase
-    private let fetchStatesUseCase: FetchStatesUseCase
-    private let fetchCitiesUseCase: FetchCitiesUseCase
+    private let httpClient: HTTPClientProtocol
 
-    init(
-        fetchAddressUseCase: FetchAddressUseCase = FetchAddress(
-            httpClient: HTTPClient(),
-            httpResource: .address(by: "")
-        ),
-        fetchStatesUseCase: FetchStatesUseCase = FetchStates(
-            httpClient: HTTPClient(),
-            httpResource: .states()
-        ),
-        fetchCitiesUseCase: FetchCitiesUseCase = FetchCities(
-            httpClient: HTTPClient(),
-            httpResource: .cities(for: "")
-        )
-    ) {
-        self.fetchAddressUseCase = fetchAddressUseCase
-        self.fetchStatesUseCase = fetchStatesUseCase
-        self.fetchCitiesUseCase = fetchCitiesUseCase
+    init(httpClient: HTTPClientProtocol = HTTPClient()) {
+        self.httpClient = httpClient
     }
     
     func searchZipCode(_ zipCode: String) {
-        let fetchAddressUseCase = FetchAddress(zipCode: zipCode)
-        fetchAddressUseCase.fetch { [weak self] result in
+        let resource = ResourceModel.address(by: zipCode)
+        
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
-            case .success(let address):
-                self?.originalAddress = address
-                self?.onAddressLoaded?(address)
+            case .success(let data):
+                if let dto: AddressDTO = data?.toModel() {
+                    if dto.erro == true {
+                        self.onCEPError?("CEP não encontrado.")
+                    } else {
+                        let address = dto.toDomain()
+                        self.originalAddress = address
+                        self.onAddressLoaded?(address)
+                    }
+                } else {
+                    self.onCEPError?("Resposta inválida do servidor.")
+                }
             case .failure(let error):
-                self?.onCEPError?(error.localizedDescription)
+                self.onCEPError?(error.localizedDescription)
             }
         }
     }
-
+    
     func fetchStates() {
-        fetchStatesUseCase.fetch { [weak self] result in
+        let resource = ResourceModel.states()
+        
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
-            case .success(let states):
-                self?.onStatesLoaded?(states)
+            case .success(let data):
+                if let dtos: [StateDTO] = data?.toModel() {
+                    let states = dtos.map { $0.sigla }.sorted()
+                    self.onStatesLoaded?(states)
+                } else {
+                    self.onLocationError?("Falha ao carregar estados.")
+                }
             case .failure(let error):
-                self?.onLocationError?(error.localizedDescription)
+                self.onLocationError?(error.localizedDescription)
             }
         }
     }
     
     //Busca cidades
     func fetchCities(for stateUF: String) {
-        fetchCitiesUseCase.fetch(for: stateUF) { [weak self] result in
+        let resource = ResourceModel.cities(for: stateUF)
+        
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
-            case .success(let cities):
-                self?.onCitiesLoaded?(cities)
+            case .success(let data):
+                if let dtos: [CityDTO] = data?.toModel() {
+                    let cities = dtos.map { $0.nome }.sorted()
+                    self.onCitiesLoaded?(cities)
+                } else {
+                    self.onLocationError?("Falha ao carregar cidades.")
+                }
             case .failure(let error):
-                self?.onLocationError?(error.localizedDescription)
+                self.onLocationError?(error.localizedDescription)
             }
-        }        
+        }
     }
     
     func validationAddress (
@@ -138,6 +152,7 @@ final class AddressRegistrationViewModel {
                 onValidationError?(errorsMessage)
             } else {
                 //TODO: será implementado após a a entrega das outras telas
+                onValidationSuccess?()
             }
     
     }

@@ -25,10 +25,10 @@ final class PaymentDetailsViewModel {
     private var allBanks: [Bank] = []
     private(set) var filteredBanks: [Bank] = []
     
-    private let fetchBanksUseCase: FetchBanksUseCase
-    
-    init(fetchBanksUseCase: FetchBanksUseCase = FetchBanks()) {
-        self.fetchBanksUseCase = fetchBanksUseCase
+    private let httpClient: HTTPClientProtocol
+
+    init(httpClient: HTTPClientProtocol = HTTPClient()) {
+        self.httpClient = httpClient
     }
     
     func updateAgency(_ text: String?) {
@@ -109,14 +109,21 @@ final class PaymentDetailsViewModel {
     }
     
     func loadBanks(completion: @escaping (Result<Void, RequestError>) -> Void) {
-        fetchBanksUseCase.fetch { [weak self] result in
+        let resource = ResourceModel.banks()
+        
+        httpClient.load(resource) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case .success(let banks):
-                self.allBanks = banks.sorted { $0.name < $1.name }
-                self.filteredBanks = self.allBanks
-                completion(.success(()))
+            case .success(let data):
+                if let bankDTOs: [BankDTO] = data?.toModel() {
+                    let banks = bankDTOs.map { $0.toDomain() }.sorted { $0.name < $1.name }
+                    self.allBanks = banks
+                    self.filteredBanks = banks
+                    completion(.success(()))
+                } else {
+                    completion(.failure(.invalidResponse))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
