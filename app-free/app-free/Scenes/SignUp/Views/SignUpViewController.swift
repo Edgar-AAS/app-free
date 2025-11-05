@@ -48,7 +48,7 @@ extension SignUpViewController: SignUpScreenDelegate {
         let result = viewModel.continueButtonTapped()
         switch result {
             case .success(let userInfo):
-                print("✅ Formulário preenchido com sucesso! Informações do Usuário:")
+            print(Strings.formCompleted)
                 print(userInfo)
             let dataSignUp = SignUpForm(
                 fullName: screen?.fullNameTextField.text,
@@ -59,11 +59,10 @@ extension SignUpViewController: SignUpScreenDelegate {
                     phone: screen?.phoneTextField.text
                 )
                 
-                // Cria a tela de senha e PASSA os dados
-                let passwordVC = PasswordFormViewController()
-                passwordVC.signUpModel = dataSignUp
-                
-                navigationController?.pushViewController(passwordVC, animated: true)
+            // Cria a tela de senha e PASSA os dados
+            let addressVC = AddressFormViewController()
+            addressVC.signUpModel = dataSignUp
+            navigationController?.pushViewController(addressVC, animated: true)
             
             case .failure(let message):
                 presentAlert(message)
@@ -90,8 +89,8 @@ extension SignUpViewController: SignUpScreenDelegate {
 extension SignUpViewController {
     
     func presentAlert(_ message: String) {
-        let alert = UIAlertController(title: "Erro de Validação!", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+        let alert = UIAlertController(title: Strings.validationError, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Strings.ok, style: .destructive))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -114,8 +113,8 @@ extension SignUpViewController {
             screen.emailConfirmationTextField.shake()
         }
         
-        let email = screen.emailTextField.text ?? ""
-        let confirm = screen.emailConfirmationTextField.text ?? ""
+        let email = screen.emailTextField.text ?? Strings.space
+        let confirm = screen.emailConfirmationTextField.text ?? Strings.space
         
         if !email.isEmpty && !confirm.isEmpty && email != confirm {
             screen.emailTextField.shake()

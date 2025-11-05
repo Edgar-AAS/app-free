@@ -7,4 +7,113 @@
 
 //TODO: ADICIONAR TODAS AS STRINGS DO PROJETO AQUI
 
-"stringExample" = "Minha String bla bla bla";
+//Scene Address
+"Endereço Pessoal" = "Endereço Pessoal";
+"CEP" = "CEP";
+"Endereço" = "Endereço";
+"N˚" = "N˚";
+"Complemento" = "Complemento";
+"Bairro" = "Bairro";
+"Estado" = "Estado";
+"Cidade" = "Cidade";
+"Selecione um estado primeiro!" = "Selecione um estado primeiro!";
+"CEP Inválido" = "CEP Inválido";
+"[^0-9]" = "[^0-9]";
+
+//Validacao de Erros na tela
+"Erro de Validação" = "Erro de Validação";
+"Navegando para a próxima tela" = "Navegando para a próxima tela";
+"Campos preenchidos com sucesso" = "Campos preenchidos com sucesso";
+"Atenção" = "Atenção";
+"OK" = "OK";
+"Algo deu errado" = "Algo deu errado";
+"init(coder:) has not been implemented" = "init(coder:) has not been implemented";
+"Erro" = "Erro";
+
+//Sucesso nas validacoes
+"Sucesso" = "Sucesso";
+
+//commons
+"empty_string" = "";
+"-" = "-";
+"cell" = "cell";
+"\\n" = "\n";
+
+//Botoes
+"CONTINUAR" = "CONTINUAR";
+"CADASTRAR" = "CADASTRAR";
+"ENTRAR" = "ENTRAR";
+"FINALIZAR" = "FINALIZAR";
+
+//Scene Welcome
+"Bem Vindo!" = "Bem Vindo!";
+
+//SignUp Scene
+"Dados Pessoais" = "Dados Pessoais";
+"Nome completo" = "Nome completo";
+"Data de nascimento" = "Data de nascimento";
+"CPF" = "CPF";
+"E-mail" = "E-mail";
+"Confirme seu e-mail" = "Confirme seu e-mail";
+"Número com DD" = "Número com DD";
+"Li e estou de acordo com o Termo de Uso e Política de Privacidade" = "Li e estou de acordo com o Termo de Uso e Política de Privacidade";
+"Nome completo obrigatório." = "Nome completo obrigatório.";
+"Data de nascimento obrigatória." = "Data de nascimento obrigatória.";
+"Você deve ter pelo menos 18 anos." = "Você deve ter pelo menos 18 anos.";
+"CPF obrigatório." = "CPF obrigatório.";
+"CPF inválido (formato: XXX.XXX.XXX-XX)." = "CPF inválido (formato: XXX.XXX.XXX-XX).";
+"E-mail obrigatório." = "E-mail obrigatório.";
+"E-mail inválido." = "E-mail inválido.";
+"Confirmação de e-mail obrigatória." = "Confirmação de e-mail obrigatória.";
+"Os e-mails não coincidem." = "Os e-mails não coincidem.";
+"Número de telefone obrigatório." = "Número de telefone obrigatório.";
+"Número de telefone inválido (formato: (XX) XXXXX-XXXX)." = "Número de telefone inválido (formato: (XX) XXXXX-XXXX).";
+"Você deve aceitar os Termos de Uso." = "Você deve aceitar os Termos de Uso.";
+"dd/MM/yyyy" = "dd/MM/yyyy";
+"^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$" = "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$";
+"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}" = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}";
+"^\\(\\d{2}\\) \\d{5}-\\d{4}$" = "^\\(\\d{2}\\) \\d{5}-\\d{4}$";
+"Full Name" = "Full Name";
+"Birthday" = "Birthday";
+"Phone" = "Phone";
+"Formulário preenchido com sucesso! Informações do Usuário:" = "Formulário preenchido com sucesso! Informações do Usuário:";
+
+//Payment Scene
+"BankCell" = "BankCell";
+"Nenhum banco encontrado" = "Nenhum banco encontrado";
+"Dados Bancários Para Recebimento" = "Dados Bancários Para Recebimento";
+"Selecione ou busque um banco" = "Selecione ou busque um banco";
+"Agência (4 dígitos)" = "Agência (4 dígitos)";
+"Conta com dígito" = "Conta com dígito";
+"Qual é o seu tipo de conta?" = "Qual é o seu tipo de conta?";
+"Pessoa Física" = "Pessoa Física";
+"Pessoa Jurídica" = "Pessoa Jurídica";
+"Chave PIX" = "Chave PIX";
+"PF" = "PF";
+"PJ" = "PJ";
+"Erro ao carregar bancos. Tente novamente." = "Erro ao carregar bancos. Tente novamente.";
+"Dados bancários configurados com sucesso!" = "Dados bancários configurados com sucesso!";
+"X" = "X";
+"x" = "x";
+"Agência obrigatória" = "Agência obrigatória";
+"Conta obrigatória" = "Conta obrigatória";
+"Conta inválida" = "Conta inválida";
+"Chave PIX obrigatória" = "Chave PIX obrigatória";
+"Selecione um banco" = "Selecione um banco";
+"Agência deve ter 4 dígitos" = "Agência deve ter 4 dígitos";
+"SELF MATCHES %@" = "SELF MATCHES %@";
+"Banco:" = "Banco:";
+"Agência:" = "Agência:";
+"Conta:" = "Conta:";
+"Tipo de Conta:" = "Tipo de Conta:";
+"Pix:" = "Pix:";
+"Nenhum" = "Nenhum";
+
+//Password Scene
+"Crie uma senha" = "Crie uma senha";
+"Confirme sua senha" = "Confirme sua senha";
+"Cadastro realizado!" = "Cadastro realizado!";
+"Falha ao salvar:" = "Falha ao salvar";
+"As senhas não conferem" = "As senhas não conferem";
+"Senha inválida" = "Senha inválida";
+"Email inválido" = "Email inválido";

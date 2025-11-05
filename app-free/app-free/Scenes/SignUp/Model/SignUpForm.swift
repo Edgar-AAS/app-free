@@ -16,12 +16,12 @@ struct SignUpForm: Codable {
     let phone: String
     
     init(fullName: String?, birthday: String?, cpf: String?, email: String?, emailConfirmation: String?, phone: String?) {
-        self.fullName = fullName ?? ""
-        self.birthday = birthday ?? ""
-        self.cpf = cpf ?? ""
-        self.email = email ?? ""
-        self.emailConfirmation = emailConfirmation ?? ""
-        self.phone = phone ?? ""
+        self.fullName = fullName ?? Strings.space
+        self.birthday = birthday ?? Strings.space
+        self.cpf = cpf ?? Strings.space
+        self.email = email ?? Strings.space
+        self.emailConfirmation = emailConfirmation ?? Strings.space
+        self.phone = phone ?? Strings.space
     }
     
     func isEmpty() -> Bool {

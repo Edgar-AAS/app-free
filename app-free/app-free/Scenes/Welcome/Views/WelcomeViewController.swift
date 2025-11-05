@@ -18,7 +18,7 @@ class WelcomeViewController: UIViewController {
     override func loadView() {
         self.screen = WelcomeScreen()
         self.view = self.screen
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = AFColors.patternWhite
     }
 
     override func viewDidLoad() {
