@@ -50,16 +50,27 @@ class PasswordViewModel {
     }
     
     //Manda os dados para o firebase
-    func registerUser(password: String?, email: String?) async throws {
+    func registerUser(password: String?, email: String?, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let validPassword = password, !validPassword.isEmpty else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Senha inválida"])
+            let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Senha inválida"])
+            completion(.failure(error))
+            return
         }
         
         guard let validEmail = email, !validEmail.isEmpty else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email inválido"])
+            let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email inválido"])
+            completion(.failure(error))
+            return
         }
         
-        try await repository.registerUser(email: validEmail, password: validPassword)
+        repository.registerUser(email: validEmail, password: validPassword) { result in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
 }

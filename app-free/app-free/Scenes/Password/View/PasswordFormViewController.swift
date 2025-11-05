@@ -100,21 +100,22 @@ class PasswordFormViewController: UIViewController {
     
     
     private func showHandleEnd() {
-        Task {
-            do {
-                try await viewModel.registerUser(
-                    password: passwordView?.passwordTextField.text,
-                    email: signUpModel?.email
-                )
-                await MainActor.run {
-                    if let typedPassword = passwordView?.passwordTextField.text {
+        viewModel.registerUser(
+            password: passwordView?.passwordTextField.text,
+            email: signUpModel?.email
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    if let typedPassword = self.passwordView?.passwordTextField.text {
                         self.passwordModel = PasswordModel(password: typedPassword)
-                        showAlert(title: "Sucesso", message: "Cadastro realizado!")
                     }
-                }
-            } catch {
-                await MainActor.run {
-                    showAlert(title: "Erro", message: "Falha ao salvar: \(error.localizedDescription)")
+                    self.showAlert(title: "Sucesso", message: "Cadastro realizado!")
+                    
+                case .failure(let error):
+                    self.showAlert(title: "Erro", message: "Falha ao salvar: \(error.localizedDescription)")
                 }
             }
         }
