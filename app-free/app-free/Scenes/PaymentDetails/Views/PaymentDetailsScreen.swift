@@ -15,7 +15,7 @@ class PaymentDetailsScreen: UIView {
    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = AFColors.patternWhite
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
@@ -32,8 +32,8 @@ class PaymentDetailsScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
-        button.backgroundColor = .clear
+        button.setImage(Assets.arrowLeft, for: .normal)
+        button.backgroundColor = AFColors.clearColor
         button.addTarget(self, action: #selector(paymentDetailsScreenDidTapBack), for: .touchUpInside)
         
         return button
@@ -42,16 +42,15 @@ class PaymentDetailsScreen: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        let numberOfLines = DeviceSizeAdapter.constraintValue(se: 2, iPhone: 2, iPad: 1)
+        let numberOfLines = DeviceSizeAdapter.constraintValue(se: AFSizes.size2, iPhone: AFSizes.size2, iPad: AFSizes.size1)
         label.numberOfLines = Int(numberOfLines)
         
-        let text = "Dados Bancários Para Recebimento"
+        let text = Strings.bankDetailsForPayment
 
-        let fontSize: CGFloat = 30
-        let font = UIFont(name: "OpenSans-Bold", size: fontSize)
-        ?? UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        let fontSize: CGFloat = AFSizes.size30
+        let font = AFFonts.bold(fontSize) 
         
-        let lineHeight = DeviceSizeAdapter.constraintValue(se: fontSize * 1.44, iPhone: fontSize * 1.64, iPad: fontSize)
+        let lineHeight = DeviceSizeAdapter.constraintValue(se: fontSize * AFSizes.size1_44, iPhone: fontSize * AFSizes.size1_64, iPad: fontSize)
         let style = NSMutableParagraphStyle()
         style.minimumLineHeight = lineHeight
         style.maximumLineHeight = lineHeight
@@ -72,16 +71,16 @@ class PaymentDetailsScreen: UIView {
     lazy var bankContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(hexString: "E6EDFF")
-        view.layer.cornerRadius = 10
+        view.backgroundColor = AFColors.brandLightBlue
+        view.layer.cornerRadius = AFSizes.size10
         return view
     }()
 
     lazy var bankTextField: AFTextField = {
-        let textField = AFTextField(type: .default(placeholder: "Selecione ou busque um banco"))
+        let textField = AFTextField(type: .default(placeholder: Strings.selectOrSearchBank))
         textField.backgroundColor = .clear
         textField.borderStyle = .none
-        textField.layer.cornerRadius = 0
+        textField.layer.cornerRadius = AFSizes.size0
         textField.clipsToBounds = false
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
@@ -90,8 +89,7 @@ class PaymentDetailsScreen: UIView {
     private lazy var dropdownArrow: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "chevron.down")?
-            .withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
+        imageView.image = Assets.chevron(color: AFColors.signUpColor)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -102,13 +100,13 @@ class PaymentDetailsScreen: UIView {
     }()
     
     lazy var agencyTextField: AFTextField = {
-        let textField = AFTextField(type: .numeric(placeholder: "Agência (4 dígitos)"))
+        let textField = AFTextField(type: .numeric(placeholder: Strings.agencyFourDigits))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
     lazy var accountTextField: AFTextField = {
-        let textField = AFTextField(type:.default(placeholder: "Conta com dígito"))
+        let textField = AFTextField(type:.default(placeholder: Strings.accountWithDigit))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
@@ -116,32 +114,32 @@ class PaymentDetailsScreen: UIView {
     private lazy var accountTypeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Qual é o seu tipo de conta?"
-        label.font = UIFont(name: "OpenSans-Regular", size: 13) ?? .systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(hexString: "2E3E4B")
+        label.text = Strings.accountType
+        label.font = AFFonts.regular(AFSizes.size14)
+        label.textColor = AFColors.signUpGray
         return label
     }()
    
     lazy var individualButton: AFRadioButton = {
-        let button = AFRadioButton(title: "Pessoa Física")
+        let button = AFRadioButton(title: Strings.individualPerson)
         button.addTarget(self, action: #selector(accountTypeSelected(_:)), for: .touchUpInside)
         return button
     }()
 
     lazy var businessButton: AFRadioButton = {
-        let button = AFRadioButton(title: "Pessoa Jurídica")
+        let button = AFRadioButton(title: Strings.legalEntity)
         button.addTarget(self, action: #selector(accountTypeSelected(_:)), for: .touchUpInside)
         return button
     }()
     
     lazy var pixTextField: AFTextField = {
-        let textField = AFTextField(type:.default(placeholder: "Chave PIX"))
+        let textField = AFTextField(type:.default(placeholder: Strings.pixKey))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
     lazy var continueButton: AFFilledButton = {
-        let button = AFFilledButton(title: "CONTINUAR")
+        let button = AFFilledButton(title: Strings.continueButton)
         button.addTarget(self, action: #selector(paymentDetailsScreenDidTapContinue), for: .touchUpInside)
         return button
     }()
@@ -157,7 +155,7 @@ class PaymentDetailsScreen: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Strings.fatalError)
     }
 
     func configure(with viewModel: PaymentDetailsViewModel) {
@@ -204,7 +202,7 @@ class PaymentDetailsScreen: UIView {
             self.closeBankPicker()
         }
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: AFSizes.size03) {
             self.dropdownArrow.transform = CGAffineTransform(rotationAngle: .pi)
         }
     }
@@ -212,7 +210,7 @@ class PaymentDetailsScreen: UIView {
     private func closeBankPicker() {
         bankPicker.dismiss()
 
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: AFSizes.size03) {
             self.dropdownArrow.transform = .identity
         }      
     }
@@ -298,8 +296,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 0),
-            size: .init(width: 24, height: 24)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size24, height: AFSizes.size24)
         )
 
         titleLabel.fillConstraints(
@@ -308,10 +306,10 @@ extension PaymentDetailsScreen: CodeView {
             trailing: containerView.trailingAnchor,
             bottom: nil,
             padding: .init(
-                top: DeviceSizeAdapter.constraintValue(se: 16, iPhone: 16, iPad: 40),
-                left: 16,
-                bottom: 0,
-                right: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 70, iPad: 16))
+                top: DeviceSizeAdapter.constraintValue(se: AFSizes.size16, iPhone: AFSizes.size16, iPad: AFSizes.size40),
+                left: AFSizes.size16,
+                bottom: AFSizes.size0,
+                right: DeviceSizeAdapter.constraintValue(se: AFSizes.size50, iPhone: AFSizes.size70, iPad: AFSizes.size16))
         )
 
         bankContainer.fillConstraints(
@@ -319,8 +317,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 45, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size44, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
 
         bankTextField.fillConstraints(
@@ -328,7 +326,7 @@ extension PaymentDetailsScreen: CodeView {
             leading: bankContainer.leadingAnchor,
             trailing: dropdownArrow.leadingAnchor,
             bottom: bankContainer.bottomAnchor,
-            padding: .init(top: 0, left: 12, bottom: 0, right: 8)
+            padding: .init(top: AFSizes.size0, left: AFSizes.size12, bottom: AFSizes.size0, right: AFSizes.size8)
         )
 
         dropdownArrow.fillConstraints(
@@ -336,8 +334,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: nil,
             trailing: bankContainer.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 0, left: 0, bottom: 0, right: 12),
-            size: .init(width: 20, height: 20)
+            padding: .init(top: AFSizes.size0, left: AFSizes.size0, bottom: AFSizes.size0, right: AFSizes.size12),
+            size: .init(width: AFSizes.size20, height: AFSizes.size20)
         )
         
         dropdownArrow.centerYAnchor.constraint(equalTo: bankContainer.centerYAnchor).isActive = true
@@ -347,8 +345,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         accountTextField.fillConstraints(
@@ -356,8 +354,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         accountTypeLabel.fillConstraints(
@@ -365,7 +363,7 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 30, left: 16, bottom: 0, right: 0)
+            padding: .init(top: AFSizes.size32, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0)
         )
 
         individualButton.fillConstraints(
@@ -373,8 +371,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 12, left: 16, bottom: 0, right: 0),
-            size: .init(width: 0, height: 44)
+            padding: .init(top: AFSizes.size12, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size0, height: AFSizes.size44)
         )
 
         businessButton.fillConstraints(
@@ -382,8 +380,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top:1, left: 16, bottom: 0, right: 0),
-            size: .init(width: 0, height: 44)
+            padding: .init(top:AFSizes.size1, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size0, height: AFSizes.size44)
         )
 
         pixTextField.fillConstraints(
@@ -391,8 +389,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
 
         continueButton.fillConstraints(
@@ -400,8 +398,8 @@ extension PaymentDetailsScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: containerView.bottomAnchor,
-            padding: .init(top: 40, left: 16, bottom: 40, right: 16),
-            size: .init(width: 0, height: 54)
+            padding: .init(top: AFSizes.size40, left: AFSizes.size16, bottom: AFSizes.size40, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size52)
         )
         
     }

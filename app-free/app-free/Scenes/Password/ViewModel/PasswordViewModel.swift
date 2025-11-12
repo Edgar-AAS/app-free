@@ -39,18 +39,18 @@ class PasswordViewModel {
             return
         }
         if password != confirmPassword {
-            onValidationError?("As senhas não conferem")
+            onValidationError?(Strings.passwordCheck)
         }
     }
     
     //Manda os dados para o firebase
     func saveUsersFirebase(password: String?, email: String?) async throws {
         guard let validPassword = password, !validPassword.isEmpty else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Senha inválida"])
+            throw NSError(domain: Strings.space, code: Int(-AFSizes.size1), userInfo: [NSLocalizedDescriptionKey: Strings.invalidPassword])
         }
         
         guard let validEmail = email, !validEmail.isEmpty else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email inválido"])
+            throw NSError(domain: Strings.space, code: Int(-AFSizes.size1), userInfo: [NSLocalizedDescriptionKey: Strings.invalidEmail])
         }
         
         try await Auth.auth().createUser(withEmail: validEmail, password: validPassword)

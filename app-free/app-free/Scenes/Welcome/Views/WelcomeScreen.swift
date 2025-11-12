@@ -14,7 +14,7 @@ class WelcomeScreen: UIView {
     lazy var subImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "WelcomeBackground")
+        image.image = Assets.welcomeBackground
         image.contentMode = .scaleAspectFill
         return image
     }()
@@ -22,26 +22,25 @@ class WelcomeScreen: UIView {
     lazy var logoAppImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "logo2")
+        image.image = Assets.logo2
         return image
     }()
     
     lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        label.text = "Bem Vindo!"
+        label.textColor = AFColors.patternWhite
+        label.text = Strings.welcome
 
-        let fontSize: CGFloat = DeviceSizeAdapter.constraintValue(se: 26, iPhone: 30, iPad: 50)
-        let font = UIFont(name: "OpenSans-Bold", size: fontSize)
-        ?? UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        let fontSize: CGFloat = DeviceSizeAdapter.constraintValue(se: AFSizes.size26, iPhone: AFSizes.size28, iPad: AFSizes.size52)
+        let font = AFFonts.bold(fontSize)
         label.font = font
         
         return label
     }()
     
     lazy var signUpButton: AFFilledButton = {
-        let button = AFFilledButton(title: "CADASTRAR")
+        let button = AFFilledButton(title: Strings.signUp)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
         return button
@@ -51,21 +50,20 @@ class WelcomeScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        let fontSize: CGFloat = 16
-        let font = UIFont(name: "OpenSans-SemiBold", size: fontSize) ??
-        UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        let fontSize: CGFloat = AFSizes.size16
+        let font = AFFonts.semiBold(fontSize)
         
-        button.setTitle("ENTRAR", for: .normal)
-        button.setTitleColor(UIColor(hexString: "0142D4"), for: .normal)
+        button.setTitle(Strings.enter, for: .normal)
+        button.setTitleColor(AFColors.welcomeColor, for: .normal)
         button.titleLabel?.font = font
         
-        button.backgroundColor = .white
+        button.backgroundColor = AFColors.patternWhite
                     
-        button.layer.cornerRadius = 27
+        button.layer.cornerRadius = AFSizes.size28
         button.clipsToBounds = false
         
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor(hexString: "0142D4").cgColor
+        button.layer.borderWidth = AFSizes.size2
+        button.layer.borderColor = AFColors.welcomeColor.cgColor
       
         button.titleLabel?.textAlignment = .center
         
@@ -83,7 +81,7 @@ class WelcomeScreen: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Strings.fatalError)
     }
     
     private func configConstraints() {
@@ -94,23 +92,23 @@ class WelcomeScreen: UIView {
             self.subImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.subImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                         
-            self.logoAppImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 70, iPhone: 123, iPad: 123)),
-            self.logoAppImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.logoAppImageView.widthAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
-            self.logoAppImageView.heightAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: 50, iPhone: 60, iPad: 100)),
+            self.logoAppImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: AFSizes.size72, iPhone: AFSizes.size120, iPad: AFSizes.size120)),
+            self.logoAppImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AFSizes.size16),
+            self.logoAppImageView.widthAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: AFSizes.size52, iPhone: AFSizes.size60, iPad: AFSizes.size100)),
+            self.logoAppImageView.heightAnchor.constraint(equalToConstant: DeviceSizeAdapter.constraintValue(se: AFSizes.size52, iPhone: AFSizes.size60, iPad: AFSizes.size100)),
             
-            self.welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 150, iPhone: 210, iPad: 300)),
-            self.welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.welcomeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: AFSizes.size150, iPhone: AFSizes.size210, iPad: AFSizes.size300)),
+            self.welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AFSizes.size16),
             
-            self.signUpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: 500, iPhone: 673, iPad: 1100)),
-            self.signUpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.signUpButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.signUpButton.heightAnchor.constraint(equalToConstant: 54),
+            self.signUpButton.topAnchor.constraint(equalTo: self.topAnchor, constant: DeviceSizeAdapter.constraintValue(se: AFSizes.size500, iPhone: AFSizes.size673, iPad: AFSizes.size1100)),
+            self.signUpButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AFSizes.size16),
+            self.signUpButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -AFSizes.size16),
+            self.signUpButton.heightAnchor.constraint(equalToConstant: AFSizes.size56),
             
-            self.signInButton.topAnchor.constraint(equalTo: self.signUpButton.bottomAnchor, constant: 14),
-            self.signInButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.signInButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.signInButton.heightAnchor.constraint(equalToConstant: 54),
+            self.signInButton.topAnchor.constraint(equalTo: self.signUpButton.bottomAnchor, constant: AFSizes.size14),
+            self.signInButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AFSizes.size16),
+            self.signInButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -AFSizes.size16),
+            self.signInButton.heightAnchor.constraint(equalToConstant: AFSizes.size56),
         
         ])
     }

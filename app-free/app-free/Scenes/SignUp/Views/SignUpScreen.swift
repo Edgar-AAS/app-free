@@ -2,7 +2,7 @@
 //  SignUpScreen.swift
 //  app-free
 //
-//  Created by Lidia on 20/10/25.
+//  Created by Lidia on20/10/25.
 //
 
 import UIKit
@@ -31,8 +31,8 @@ class SignUpScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
-        button.backgroundColor = .clear
+        button.setImage(Assets.arrowLeft, for: .normal)
+        button.backgroundColor = AFColors.clearColor
         button.addTarget(self, action: #selector(signUpScreenDidTapBack), for: .touchUpInside)
         
         return button
@@ -42,42 +42,41 @@ class SignUpScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        label.text = "Dados Pessoais"
-        let fontSize: CGFloat = 30
-        let font = UIFont(name: "OpenSans-Bold", size: fontSize)
-        ?? UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        label.text = Strings.personalData
+        let fontSize: CGFloat = AFSizes.size32
+        let font = AFFonts.bold(fontSize)
         label.font = font
-        label.textColor = .black
+        label.textColor = AFColors.patternBlack
         
         return label
     }()
     
     lazy var fullNameTextField: AFTextField = {
-        let textField = AFTextField(type: .default(placeholder: "Nome completo"))
+        let textField = AFTextField(type: .default(placeholder: Strings.fullName))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var birthdayTextField: AFTextField = {
-        let textField = AFTextField(type: .date(placeholder: "Data de nascimento"))
+        let textField = AFTextField(type: .date(placeholder: Strings.birthDate))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var CPFTextField: AFTextField = {
-        let textField = AFTextField(type: .cpf(placeholder: "CPF"))
+        let textField = AFTextField(type: .cpf(placeholder: Strings.cpf))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailTextField: AFTextField = {
-        let textField = AFTextField(type: .email(placeholder: "E-mail"))
+        let textField = AFTextField(type: .email(placeholder: Strings.email))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
     
     lazy var emailConfirmationTextField: AFTextField = {
-        let textField = AFTextField(type: .email(placeholder: "Confirme seu e-mail"))
+        let textField = AFTextField(type: .email(placeholder: Strings.confirmEmail))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -85,8 +84,7 @@ class SignUpScreen: UIView {
     lazy var emailCheckmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 10, weight: .regular))
+        let checkImage = Assets.checkmark(color: AFColors.signUpColor, size: AFSizes.size10)
         imageView.image = checkImage
         imageView.isHidden = true
         return imageView
@@ -95,15 +93,14 @@ class SignUpScreen: UIView {
     lazy var emailConfirmationCheckmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal)
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 10, weight: .regular))
+        let checkImage = Assets.checkmark(color: AFColors.signUpColor, size: AFSizes.size10)
         imageView.image = checkImage
         imageView.isHidden = true
         return imageView
     }()
     
     lazy var phoneTextField: AFTextField = {
-        let textField = AFTextField(type: .cellphone(placeholder: "Número com DD"))
+        let textField = AFTextField(type: .cellphone(placeholder: Strings.phoneNumberWithAreaCode))
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textField
     }()
@@ -112,17 +109,17 @@ class SignUpScreen: UIView {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        let backgroundImage = UIImage(systemName: "square.fill")?.withTintColor(UIColor(hexString: "E6EDFF"), renderingMode: .alwaysOriginal)
+        let backgroundImage = Assets.squareFill(color: AFColors.brandLightBlue)
         button.setBackgroundImage(backgroundImage, for: .normal)
         button.setBackgroundImage(backgroundImage, for: .selected)
-        let checkImage = UIImage(systemName: "checkmark")?.withTintColor(UIColor(hexString: "0451FF"), renderingMode: .alwaysOriginal).withConfiguration(UIImage.SymbolConfiguration(pointSize: 12, weight: .medium))
+        let checkImage = Assets.checkmark(color: AFColors.signUpColor, size: AFSizes.size12)
         
         button.setImage(checkImage, for: .selected)
         button.setImage(nil, for: .normal)
-        button.tintColor = UIColor(hexString: "0451FF")
-        button.layer.cornerRadius = 5.0
+        button.tintColor = AFColors.signUpColor
+        button.layer.cornerRadius = AFSizes.size6
         button.clipsToBounds = true
-        button.backgroundColor = UIColor(hexString: "E6EDFF")
+        button.backgroundColor = AFColors.brandLightBlue
         button.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
         
         return button
@@ -132,22 +129,22 @@ class SignUpScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        let fontSize: CGFloat = 10.9
-        let font = UIFont(name: "OpenSans-Regular", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        let fullText = "Li e estou de acordo com o Termo de Uso e Política de Privacidade"
+        let fontSize: CGFloat = AFSizes.size10
+        let font = AFFonts.regular(fontSize)
+        let fullText = Strings.termsAndPrivacyAgreement
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(hexString: "2E3E4B"), range: NSRange(location: 0, length: 26))
-        attributedString.addAttribute(.font, value: font, range: NSRange(location: 0, length: 26))
-        attributedString.addAttribute(.foregroundColor, value: UIColor(hexString: "0451FF"), range: NSRange(location: 26, length: fullText.count - 26))
-        attributedString.addAttribute(.font, value: font, range: NSRange(location: 26, length: fullText.count - 26))
+        attributedString.addAttribute(.foregroundColor, value: AFColors.signUpGray, range: NSRange(location: Int(AFSizes.size0), length: Int(AFSizes.size26)))
+        attributedString.addAttribute(.font, value: font, range: NSRange(location: Int(AFSizes.size0), length: Int(AFSizes.size26)))
+        attributedString.addAttribute(.foregroundColor, value: AFColors.signUpColor, range: NSRange(location: Int(AFSizes.size26), length: fullText.count - Int(AFSizes.size26)))
+        attributedString.addAttribute(.font, value: font, range: NSRange(location: Int(AFSizes.size26), length: fullText.count - Int(AFSizes.size26)))
         label.attributedText = attributedString
-        label.numberOfLines = 0
+        label.numberOfLines = Int(AFSizes.size0)
         
         return label
     }()
     
     lazy var continueButton: AFFilledButton = {
-        let button = AFFilledButton(title: "CONTINUAR")
+        let button = AFFilledButton(title: Strings.continueButton)
         button.addTarget(self, action: #selector(signUpScreenDidTapContinue), for: .touchUpInside)
         return button
     }()
@@ -237,8 +234,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 0),
-            size: .init(width: 24, height: 24)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size24, height: AFSizes.size24)
         )
         
         titleLabel.fillConstraints(
@@ -246,7 +243,7 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 40, left: 16, bottom: 0, right: 0)
+            padding: .init(top: AFSizes.size40, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0)
         )
         
         fullNameTextField.fillConstraints(
@@ -254,8 +251,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 45, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size44, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         birthdayTextField.fillConstraints(
@@ -263,8 +260,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         CPFTextField.fillConstraints(
@@ -272,8 +269,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         emailTextField.fillConstraints(
@@ -281,8 +278,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         emailConfirmationTextField.fillConstraints(
@@ -290,8 +287,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         phoneTextField.fillConstraints(
@@ -299,8 +296,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         checkboxButton.fillConstraints(
@@ -308,8 +305,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 40, left: 16, bottom: 0, right: 0),
-            size: .init(width: 24, height: 24)
+            padding: .init(top: AFSizes.size40, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size24, height: AFSizes.size24)
         )
         
         termsLabel.fillConstraints(
@@ -317,7 +314,7 @@ extension SignUpScreen: CodeView {
             leading: checkboxButton.trailingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 0, left: 5, bottom: 0, right: 16)
+            padding: .init(top: AFSizes.size0, left:AFSizes.size6, bottom: AFSizes.size0, right: AFSizes.size16)
         )
         termsLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor).isActive = true
         
@@ -326,8 +323,8 @@ extension SignUpScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: containerView.bottomAnchor,
-            padding: .init(top: 40, left: 16, bottom: 40, right: 16),
-            size: .init(width: 0, height: 54)
+            padding: .init(top: AFSizes.size40, left: AFSizes.size16, bottom: AFSizes.size40, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size56)
         )
         
         emailCheckmarkImageView.fillConstraints(
@@ -335,8 +332,8 @@ extension SignUpScreen: CodeView {
             leading: nil,
             trailing: emailTextField.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 0, left: 0, bottom: 0, right: 16),
-            size: .init(width: 20, height: 14)
+            padding: .init(top: AFSizes.size0, left: AFSizes.size0, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size20, height: AFSizes.size14)
         )
         emailCheckmarkImageView.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor).isActive = true
         
@@ -345,8 +342,8 @@ extension SignUpScreen: CodeView {
             leading: nil,
             trailing: emailConfirmationTextField.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 0, left: 0, bottom: 0, right: 16),
-            size: .init(width: 20, height: 14)
+            padding: .init(top: AFSizes.size0, left: AFSizes.size0, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size20, height: AFSizes.size14)
         )
         emailConfirmationCheckmarkImageView.centerYAnchor.constraint(equalTo: emailConfirmationTextField.centerYAnchor).isActive = true
                 

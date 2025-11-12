@@ -17,9 +17,9 @@ struct PaymentDetailsForm: Codable {
     init(
         selectedBank: Bank? = nil,
         accountType: AccountType = .individual,
-        agency: String = "",
-        account: String = "",
-        pixKey: String = ""
+        agency: String = Strings.space,
+        account: String = Strings.space,
+        pixKey: String = Strings.space
     ) {
         self.selectedBank = selectedBank
         self.accountType = accountType
@@ -37,13 +37,20 @@ struct PaymentDetailsForm: Codable {
 }
 
 enum AccountType: String, Codable, CaseIterable {
-    case individual = "Pessoa Física"
-    case business   = "Pessoa Jurídica"
+    case individual
+    case business
+        
+    var title: String {
+        switch self {
+        case .individual: return Strings.indidualPerson
+        case .business: return Strings.bussinessPerson
+        }
+    }
     
     var short: String {
         switch self {
-        case .individual: return "PF"
-        case .business:   return "PJ"
+        case .individual: return Strings.pf
+        case .business:   return Strings.pj
         }
     }
 }

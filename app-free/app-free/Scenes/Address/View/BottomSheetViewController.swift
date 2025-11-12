@@ -22,8 +22,8 @@ class BottomSheetViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.delegate = self
         table.dataSource = self
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        table.layer.cornerRadius = 16
+        table.register(UITableViewCell.self, forCellReuseIdentifier: Strings.cell)
+        table.layer.cornerRadius = AFSizes.size16
         return table
     }()
     
@@ -38,7 +38,7 @@ class BottomSheetViewController: UIViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: AFSizes.size20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -61,9 +61,9 @@ extension BottomSheetViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Strings.cell, for: indexPath)
         cell.textLabel?.text = items[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: AFSizes.size16)
         return cell
     }
     
