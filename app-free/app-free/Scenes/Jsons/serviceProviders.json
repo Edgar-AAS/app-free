@@ -1,0 +1,30 @@
+[
+    {
+        "imageName": "servicePlumber",
+        "name": "Maskot Kota",
+        "service": "Plumber",
+        "rating": "4.8",
+        "backgroundColor": "#0054A5"
+    },
+    {
+        "imageName": "seviceElectrician",
+        "name": "Shams Jan",
+        "service": "Electrician",
+        "rating": "4.8",
+        "backgroundColor": "#A400A5"
+    },
+    {
+        "imageName": "servicePlumber",
+        "name": "João Silva",
+        "service": "Plumber",
+        "rating": "4.5",
+        "backgroundColor": "#0054A5"
+    },
+    {
+        "imageName": "seviceElectrician",
+        "name": "Maria Costa",
+        "service": "Electrician",
+        "rating": "4.9",
+        "backgroundColor": "#A400A5"
+    }
+]
