@@ -1,0 +1,27 @@
+[
+    {
+        "id": 0,
+        "title": "Plumbing",
+        "imageName": "servicePlumbing"
+    },
+    {
+        "id": 1,
+        "title": "Electric Work",
+        "imageName": "serviceEletric"
+    },
+    {
+        "id": 2,
+        "title": "Solar",
+        "imageName": "serviceSolar"
+    },
+    {
+        "id": 3,
+        "title": "Gardening",
+        "imageName": "serviceGardening"
+    },
+    {
+        "id": 4,
+        "title": "Cleaning",
+        "imageName": "serviceCleaning"
+    }
+]

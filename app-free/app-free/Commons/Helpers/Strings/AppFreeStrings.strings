@@ -8,3 +8,36 @@
 //TODO: ADICIONAR TODAS AS STRINGS DO PROJETO AQUI
 
 "stringExample" = "Minha String bla bla bla";
+
+// MARK: - Menu Tab Bar
+"Home" = "Home";
+"Calendar" = "Calendário";
+"Chat" = "Chat";
+"Profile" = "Perfil";
+
+// MARK: - Header
+"helloLabelMedium" = "Hello ";
+"helloLabelBold" = "John";
+"finances" = "Your finances are looking good";
+
+// MARK: - Login
+"loginEmailRequired" = "E-mail obrigatório.";
+"loginEmailInvalid" = "E-mail inválido.";
+"loginPasswordRequired" = "Senha obrigatória.";
+"loginSixCharacters" = "A senha deve ter pelo menos 6 caracteres.";
+"loginEmailRegex" =  "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}";
+"incorrectEmailOrPassword" = "E-mail ou senha incorretos.";
+"loginError" = "Erro ao fazer login. Tente novamente.";
+"password" = "password";
+"credential" = "credential";
+"loginMail" = "E-mail";
+"loginSenha" = "Senha";
+"loginButtonEnter" = "ENTRAR";
+"noAccountSignUp" = "Não tem uma conta? Cadastre-se";
+"loginValidationError" = "Erro de Validação!";
+"loginOk" = "OK";
+
+// MARK: - Popular Services
+"popularServicesDescription" = "Você selecionou o serviço:";
+"headerPopularServices" = "Popular Services";
+"headerseeAll" = "Ver tudo";

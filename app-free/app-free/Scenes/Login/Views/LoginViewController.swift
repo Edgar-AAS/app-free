@@ -59,8 +59,8 @@ final class LoginViewController: UIViewController {
     }
     
     private func presentAlert(_ message: String) {
-        let alert = UIAlertController(title: "Erro de Validação!", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+        let alert = UIAlertController(title: Strings.loginValidationError, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Strings.loginOk, style: .destructive))
         present(alert, animated: true)
     }
     
@@ -91,8 +91,13 @@ extension LoginViewController: LoginViewModelDelegate {
     func didUpdateValidation(isValid: Bool, errors: [String]) { }
     
     func didLoginSuccess() {
-        let homeVC = HomeViewController()
-        navigationController?.setViewControllers([homeVC], animated: true)
+        guard let window = view.window else { return }
+        
+        let mainTabController = MainTabBarController()
+        
+        window.rootViewController = mainTabController
+
+        UIView.transition(with: window, duration: AFSizes.defaultTransitionDuration, options: .transitionCrossDissolve, animations: nil)
     }
     
     func didLoginFail(error: String, invalidFields: [LoginField]) {
@@ -100,3 +105,4 @@ extension LoginViewController: LoginViewModelDelegate {
         shakeInvalidFields(invalidFields)
     }
 }
+

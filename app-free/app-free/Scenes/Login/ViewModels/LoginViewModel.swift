@@ -49,18 +49,18 @@ class LoginViewModel {
         var invalidFields: [LoginField] = []
         
         if form.email.isEmpty {
-            errors.append("E-mail obrigatório.")
+            errors.append(Strings.loginEmailRequired)
             invalidFields.append(.email)
         } else if !isValidEmail(form.email) {
-            errors.append("E-mail inválido.")
+            errors.append(Strings.loginEmailInvalid)
             invalidFields.append(.email)
         }
         
         if form.password.isEmpty {
-            errors.append("Senha obrigatória.")
+            errors.append(Strings.loginPasswordRequired)
             invalidFields.append(.password)
-        } else if form.password.count < 6 {
-            errors.append("A senha deve ter pelo menos 6 caracteres.")
+        } else if form.password.count < AFSizes.sixCount {
+            errors.append(Strings.loginSixCharacters)
             invalidFields.append(.password)
         }
         
@@ -72,9 +72,9 @@ class LoginViewModel {
     }
     
     private func isValidEmail(_ email: String) -> Bool {
-        let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let pattern = Strings.loginEmailRegex
         guard let regex = try? NSRegularExpression(pattern: pattern) else { return false }
-        let range = NSRange(location: 0, length: email.utf16.count)
+        let range = NSRange(location: AFSizes.zero, length: email.utf16.count)
         return regex.firstMatch(in: email, options: [], range: range) != nil
     }
     
@@ -101,10 +101,10 @@ class LoginViewModel {
                     let message: String
                     
                     let lowerError = error.localizedDescription.lowercased()
-                    if lowerError.contains("password") || lowerError.contains("credential") {
-                        message = "E-mail ou senha incorretos."
+                    if lowerError.contains(Strings.password) || lowerError.contains(Strings.credential) {
+                        message = Strings.incorrectEmailOrPassword
                     } else {
-                        message = "Erro ao fazer login. Tente novamente."
+                        message = Strings.loginError
                     }
                     
                     self.delegate?.didLoginFail(error: message, invalidFields: [])

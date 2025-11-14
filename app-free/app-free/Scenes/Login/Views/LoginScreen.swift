@@ -31,7 +31,7 @@ class LoginScreen: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
+        button.setImage((Assets.arrowLeft), for: .normal)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(loginScreenDidTapBack), for: .touchUpInside)
         
@@ -41,22 +41,22 @@ class LoginScreen: UIView {
     lazy var logoAppImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "logo2")
+        image.image = Assets.logo2
         return image
     }()
     
     lazy var emailTextField: AFTextField = {
-        let textField = AFTextField(type: .email(placeholder: "E-mail"))
+        let textField = AFTextField(type: .email(placeholder: Strings.loginMail))
         return textField
     }()
     
     lazy var passwordTextField: AFTextField = {
-        let textField = AFTextField(type: .password(placeholder: "Senha"))
+        let textField = AFTextField(type: .password(placeholder: Strings.loginSenha))
         return textField
     }()
     
     lazy var loginButton: AFFilledButton = {
-        let button = AFFilledButton(title: "ENTRAR")
+        let button = AFFilledButton(title: Strings.loginButtonEnter)
         button.addTarget(self, action: #selector(loginScreenDidTapLoginButton), for: .touchUpInside)
         return button
     }()
@@ -65,16 +65,15 @@ class LoginScreen: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        let fontSize: CGFloat = 16
-        let font = UIFont(name: "OpenSans-Regular", size: fontSize) ?? UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        let fullText = "Não tem uma conta? Cadastre-se"
+        let font = AFFonts.regular(AFSizes.size16)
+        let fullText = Strings.noAccountSignUp
         let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttribute(.foregroundColor, value: UIColor(hexString: "2E3E4B"), range: NSRange(location: 0, length: 19))
-        attributedString.addAttribute(.font, value: font, range: NSRange(location: 0, length: 19))
-        attributedString.addAttribute(.foregroundColor, value: UIColor(hexString: "0451FF"), range: NSRange(location: 19, length: fullText.count - 19))
-        attributedString.addAttribute(.font, value: font, range: NSRange(location: 19, length: fullText.count - 19))
+        attributedString.addAttribute(.foregroundColor, value: AFColors.signUpGray, range: NSRange(location: AFSizes.zero, length: AFSizes.intSize19))
+        attributedString.addAttribute(.font, value: font, range: NSRange(location: AFSizes.zero, length: AFSizes.intSize19))
+        attributedString.addAttribute(.foregroundColor, value: AFColors.signUpColor, range: NSRange(location: AFSizes.intSize19, length: fullText.count - AFSizes.intSize19))
+        attributedString.addAttribute(.font, value: font, range: NSRange(location: AFSizes.intSize19, length: fullText.count - AFSizes.intSize19))
         label.attributedText = attributedString
-        label.numberOfLines = 0
+        label.numberOfLines = AFSizes.zero
         
         label.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(loginScreenDidTapSignUp))
@@ -145,17 +144,17 @@ extension LoginScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 0),
-            size: .init(width: 24, height: 24)
-        )                
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size24, height: AFSizes.size24)
+        )
         
         logoAppImageView.fillConstraints(
             top: backButton.bottomAnchor,
             leading: nil,
             trailing: nil,
             bottom: nil,
-            padding: .init(top: 50, left: 0, bottom: 0, right: 0),
-            size: .init(width: 60, height: 60)
+            padding: .init(top: AFSizes.size50, left: AFSizes.size0, bottom: AFSizes.size0, right: AFSizes.size0),
+            size: .init(width: AFSizes.size60, height: AFSizes.size60)
         )
         
         logoAppImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
@@ -165,8 +164,8 @@ extension LoginScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: DeviceSizeAdapter.constraintValue(se: 170, iPhone: 320, iPad: 800), left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: DeviceSizeAdapter.constraintValue(se: AFSizes.size170, iPhone: AFSizes.size320, iPad: AFSizes.size800), left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size55)
         )
         
         passwordTextField.fillConstraints(
@@ -174,8 +173,8 @@ extension LoginScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 20, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 55)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size55)
         )
         
         loginButton.fillConstraints(
@@ -183,8 +182,8 @@ extension LoginScreen: CodeView {
             leading: containerView.leadingAnchor,
             trailing: containerView.trailingAnchor,
             bottom: nil,
-            padding: .init(top: 40, left: 16, bottom: 0, right: 16),
-            size: .init(width: 0, height: 54)
+            padding: .init(top: AFSizes.size40, left: AFSizes.size16, bottom: AFSizes.size0, right: AFSizes.size16),
+            size: .init(width: AFSizes.size0, height: AFSizes.size54)
         )
         
         signUpLabel.fillConstraints(
@@ -192,7 +191,7 @@ extension LoginScreen: CodeView {
             leading: nil,
             trailing: nil,
             bottom: containerView.bottomAnchor,
-            padding: .init(top: 20, left: 0, bottom: 40, right: 0)
+            padding: .init(top: AFSizes.size20, left: AFSizes.size0, bottom: AFSizes.size40, right: AFSizes.size0)
         )
         
         signUpLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
