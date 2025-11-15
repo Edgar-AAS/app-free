@@ -17,17 +17,18 @@ enum PaymentValidationResult {
     case failure(message: String)
 }
 
-class PaymentDetailsViewModel {
+final class PaymentDetailsViewModel {
     
     weak var delegate: PaymentDetailsViewModelDelegate?
-    
-    let bankService: BankServiceProtocol
+
     private(set) var form = PaymentDetailsForm()
     private var allBanks: [Bank] = []
     private(set) var filteredBanks: [Bank] = []
     
-    init(bankService: BankServiceProtocol = BankService()) {
-        self.bankService = bankService
+    private let httpClient: HTTPClientProtocol
+
+    init(httpClient: HTTPClientProtocol = HTTPClient()) {
+        self.httpClient = httpClient
     }
     
     func updateAgency(_ text: String?) {
@@ -106,10 +107,26 @@ class PaymentDetailsViewModel {
         }
     }
     
-    func loadBanks() async throws {
-        let banks = try await bankService.fetchBanks()
-        allBanks = banks.sorted { $0.name < $1.name }
-        filteredBanks = allBanks
+    func loadBanks(completion: @escaping (Result<Void, RequestError>) -> Void) {
+        let resource = ResourceModel.banks()
+        
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let data):
+                if let bankDTOs: [BankDTO] = data?.toModel() {
+                    let banks = bankDTOs.map { $0.toDomain() }.sorted { $0.name < $1.name }
+                    self.allBanks = banks
+                    self.filteredBanks = banks
+                    completion(.success(()))
+                } else {
+                    completion(.failure(.invalidResponse))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func filterBanks(searchText: String) {

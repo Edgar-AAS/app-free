@@ -1,6 +1,6 @@
 import Foundation
 
-class AddressRegistrationViewModel {
+final class AddressRegistrationViewModel {
     //callback de CEP
     var onAddressLoaded: ((Address) -> Void)?
     var onCEPError: ((String) -> Void)?
@@ -12,150 +12,80 @@ class AddressRegistrationViewModel {
 
     //callback de validacao
     var onValidationError: ((String) -> Void)?
+    var onValidationSuccess: (() -> Void)?
     
     private var originalAddress: Address?
     
-    func searchZipCode(_ zipCode: String) {
-            
-        //Busca cep
-        let urlString = "https://viacep.com.br/ws/\(zipCode)/json/"
-        guard let url = URL(string: urlString) else {
-            onCEPError?("CEP inválido")
-            return
-        }
-        
-        //Baixando os dados da url
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.onCEPError?("Erro na busca: \(error.localizedDescription)")
-                }
-                return
-            }
-        
-            //Verifica os dados retornados da api viacep
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self?.onCEPError?("Nenhum dado retornado")
-                }
-                return
-            }
-            
-            // Decodifica o JSON
-            do {
-                let address = try JSONDecoder().decode(Address.self, from: data)
-                
-                //Verificando se existe algum erro ao retornar cep
-                if address.erro == true {
-                    DispatchQueue.main.async {
-                        self?.onCEPError?("CEP não encontrado")
-                    }
-                    return
-                }
-                //guardando o endereco original
-                self?.originalAddress = address
-                
-                //Retornando os dados se nn tiverem erro para o closure
-                DispatchQueue.main.async {
-                    self?.onAddressLoaded?(address)
-                }
-                
-            } catch {
-                DispatchQueue.main.async {
-                    self?.onCEPError?("Erro ao processar dados: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        task.resume()
-    }
+    private let httpClient: HTTPClientProtocol
 
+    init(httpClient: HTTPClientProtocol = HTTPClient()) {
+        self.httpClient = httpClient
+    }
+    
+    func searchZipCode(_ zipCode: String) {
+        let resource = ResourceModel.address(by: zipCode)
+        
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let data):
+                if let dto: AddressDTO = data?.toModel() {
+                    if dto.erro == true {
+                        self.onCEPError?("CEP não encontrado.")
+                    } else {
+                        let address = dto.toDomain()
+                        self.originalAddress = address
+                        self.onAddressLoaded?(address)
+                    }
+                } else {
+                    self.onCEPError?("Resposta inválida do servidor.")
+                }
+            case .failure(let error):
+                self.onCEPError?(error.localizedDescription)
+            }
+        }
+    }
+    
     func fetchStates() {
-        let urlString = "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
+        let resource = ResourceModel.states()
         
-        guard let url = URL(string: urlString) else {
-            onLocationError?("URL inválida")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Erro ao buscar estados: \(error.localizedDescription)")
-                }
-                return
-            }
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
             
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Nenhum dado retornado")
+            switch result {
+            case .success(let data):
+                if let dtos: [StateDTO] = data?.toModel() {
+                    let states = dtos.map { $0.sigla }.sorted()
+                    self.onStatesLoaded?(states)
+                } else {
+                    self.onLocationError?("Falha ao carregar estados.")
                 }
-                return
-            }
-            
-            do {
-                let statesResponse = try JSONDecoder().decode([StateResponse].self, from: data)
-                
-                // Extrai só as siglas e ordena alfabeticamente
-                let states = statesResponse.map { $0.sigla }.sorted()
-                
-                DispatchQueue.main.async {
-                    self?.onStatesLoaded?(states)
-                }
-                
-            } catch {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Erro ao processar estados: \(error.localizedDescription)")
-                }
+            case .failure(let error):
+                self.onLocationError?(error.localizedDescription)
             }
         }
-        
-        task.resume()
     }
     
     //Busca cidades
     func fetchCities(for stateUF: String) {
-        let urlString = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/\(stateUF)/municipios"
+        let resource = ResourceModel.cities(for: stateUF)
         
-        guard let url = URL(string: urlString) else {
-            onLocationError?("URL inválida")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-        
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Erro ao buscar cidades: \(error.localizedDescription)")
-                }
-                return
-            }
+        httpClient.load(resource) { [weak self] result in
+            guard let self = self else { return }
             
-            
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Nenhum dado retornado")
+            switch result {
+            case .success(let data):
+                if let dtos: [CityDTO] = data?.toModel() {
+                    let cities = dtos.map { $0.nome }.sorted()
+                    self.onCitiesLoaded?(cities)
+                } else {
+                    self.onLocationError?("Falha ao carregar cidades.")
                 }
-                return
-            }
-            
-            do {
-                let cityResponse = try JSONDecoder().decode([CityResponse].self, from: data)
-                let city = cityResponse.map { $0.nome }.sorted()
-                
-                DispatchQueue.main.async {
-                    self?.onCitiesLoaded?(city)
-                }
-                
-            } catch {
-                DispatchQueue.main.async {
-                    self?.onLocationError?("Erro ao processar cidades: \(error.localizedDescription)")
-                }
+            case .failure(let error):
+                self.onLocationError?(error.localizedDescription)
             }
         }
-        
-        task.resume()
-        
     }
     
     func validationAddress (
@@ -222,6 +152,7 @@ class AddressRegistrationViewModel {
                 onValidationError?(errorsMessage)
             } else {
                 //TODO: será implementado após a a entrega das outras telas
+                onValidationSuccess?()
             }
     
     }

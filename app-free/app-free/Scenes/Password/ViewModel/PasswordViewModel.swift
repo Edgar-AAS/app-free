@@ -12,8 +12,14 @@ import FirebaseAuth
 
 class PasswordViewModel {
     
+    private let repository: AuthRepositoryProtocol
+    
     var onValidationError: ((String) -> Void)?
     var onButtonState: ((Bool)-> Void)?
+    
+    init(repository: AuthRepositoryProtocol = FirebaseAuthRepository()) {
+         self.repository = repository
+     }
     
     //Acontece automaticamente para liberar o botao
     func checkIfCanEnableButton(password: String?, confirmPassword: String?) {
@@ -44,16 +50,27 @@ class PasswordViewModel {
     }
     
     //Manda os dados para o firebase
-    func saveUsersFirebase(password: String?, email: String?) async throws {
+    func registerUser(password: String?, email: String?, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let validPassword = password, !validPassword.isEmpty else {
-            throw NSError(domain: Strings.space, code: Int(-AFSizes.size1), userInfo: [NSLocalizedDescriptionKey: Strings.invalidPassword])
+            let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Senha inválida"])
+            completion(.failure(error))
+            return
         }
         
         guard let validEmail = email, !validEmail.isEmpty else {
-            throw NSError(domain: Strings.space, code: Int(-AFSizes.size1), userInfo: [NSLocalizedDescriptionKey: Strings.invalidEmail])
+            let error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email inválido"])
+            completion(.failure(error))
+            return
         }
         
-        try await Auth.auth().createUser(withEmail: validEmail, password: validPassword)
+        repository.registerUser(email: validEmail, password: validPassword) { result in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
 }

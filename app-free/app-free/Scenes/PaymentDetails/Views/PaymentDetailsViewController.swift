@@ -34,14 +34,12 @@ class PaymentDetailsViewController: UIViewController {
         screen?.businessButton.isSelected = false
 
         Task {
-            do {
-                try await viewModel.loadBanks()
-                await MainActor.run { [weak self] in
+            viewModel.loadBanks { [weak self] result in
+                switch result {
+                case .success:
                     self?.screen?.updatePicker()
-                }
-            } catch {
-                await MainActor.run { [weak self] in
-                    self?.presentAlert(Strings.loadBankError)
+                case .failure:
+                    self?.presentAlert("Erro ao carregar bancos. Tente novamente.")
                 }
             }
         }

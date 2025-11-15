@@ -57,8 +57,19 @@ class AddressFormViewController: UIViewController {
     
     private func showHandleContinue() {
         var hasErrors = false
-        
         guard let addressView = addressView else {return}
+        
+        //Validacao dos erros da viewModel
+        viewModel.onValidationError = { [weak self] errorMessage in
+            self?.showAlert(title: "Erro de Validação", message: errorMessage)
+        }
+        
+        viewModel.onValidationSuccess = { [weak self] in
+            guard let self = self else { return }
+            // TODO: será implementado após a entrega das outras telas
+            print("Navegando para a próxima tela")            
+        }
+        
         viewModel.validationAddress(
             zipCode: addressView.zipCodeTextField.text,
             street: addressView.adressTextField.text,
