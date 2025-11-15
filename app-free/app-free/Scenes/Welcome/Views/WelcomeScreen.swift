@@ -42,7 +42,7 @@ class WelcomeScreen: UIView {
     lazy var signUpButton: AFFilledButton = {
         let button = AFFilledButton(title: Strings.signUp)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(welcomeScreenDidTapSignUp), for: .touchUpInside)
         return button
     }()
 
@@ -66,6 +66,7 @@ class WelcomeScreen: UIView {
         button.layer.borderColor = AFColors.welcomeColor.cgColor
       
         button.titleLabel?.textAlignment = .center
+        button.addTarget(self, action: #selector(welcomeScreenDidTapLogin), for: .touchUpInside)
         
         return button
     }()
@@ -113,8 +114,12 @@ class WelcomeScreen: UIView {
         ])
     }
     
-    @objc private func didTapSignUp() {
-        signUpDelegate?.didTapSignUp()       
+    @objc private func welcomeScreenDidTapSignUp() {
+        signUpDelegate?.welcomeScreenDidTapSignUp()       
+    }
+    
+    @objc private func welcomeScreenDidTapLogin() {
+        signUpDelegate?.welcomeScreenDidTapLogin()
     }
 
 }
