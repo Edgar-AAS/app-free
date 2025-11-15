@@ -118,7 +118,7 @@ extension LoginScreen: CodeView {
         
         containerView.addSubview(loginButton)
         containerView.addSubview(signUpLabel)
-        
+
     }
     
     func setupConstraints() {
