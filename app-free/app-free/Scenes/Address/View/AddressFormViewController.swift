@@ -16,7 +16,7 @@ import UIKit
 class AddressFormViewController: UIViewController {
     
     private let viewModel = AddressRegistrationViewModel()
-    
+    var signUpModel: SignUpForm?
     var bottomSheet = BottomSheetViewController()
    
     private var addressView: AddressRegistrationView? {
@@ -44,7 +44,7 @@ class AddressFormViewController: UIViewController {
 
     private func showCityBottomSheet() {
         guard let selectedState = addressView?.stateTextField.text else {
-            showAlert(message: "Selecione um estado primeiro!")
+            showAlert(message: Strings.selectStateFirst)
             return
         }
     
@@ -56,6 +56,7 @@ class AddressFormViewController: UIViewController {
     }
     
     private func showHandleContinue() {
+        var hasErrors = false
         guard let addressView = addressView else {return}
         
         //Validacao dos erros da viewModel
@@ -75,8 +76,21 @@ class AddressFormViewController: UIViewController {
             number: addressView.numberTextField.text,
             neighborhood: addressView.neighborhoodTextField.text,
             state: addressView.stateTextField.text,
-            city: addressView.cityTextField.text)        
+            city: addressView.cityTextField.text
+        )
+
+        //Validacao dos erros da viewModel
+        viewModel.onValidationError = { [weak self] errorMessage in
+            hasErrors = true
+            self?.showAlert(title: Strings.validationError, message: errorMessage)
+        }
         
+        if !hasErrors {
+            let paymentVC = PaymentDetailsViewController()
+            paymentVC.signUpModel = self.signUpModel
+            navigationController?.pushViewController(paymentVC, animated: true)
+            print("Navegando para a próxima tela")
+        }
     }
 
     private func setupViewModel() {
@@ -95,16 +109,16 @@ class AddressFormViewController: UIViewController {
                 addressView.complementTextField.text = address.complement
             }
             
-            print("Campos preenchidos com sucesso")
+            print(Strings.fieldsCompletedSuccessfully)
         }
         
     }
     
-    private func showAlert(title: String = "Atenção", message: String) {
+    private func showAlert(title: String = Strings.attetion, message: String) {
         let alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: Strings.ok, style: .default))
         present(alert, animated: true)
     }
 
@@ -135,14 +149,13 @@ class AddressFormViewController: UIViewController {
             guard let self = self,
                   let addressView = self.view as? AddressRegistrationView else { return }
             
-            addressView.zipCodeTextField.text = ""
-            addressView.adressTextField.text = ""
-            addressView.neighborhoodTextField.text = ""
-            addressView.cityTextField.text = ""
-            addressView.stateTextField.text = ""
-            addressView.complementTextField.text = ""
-            
-            showAlert(title: "CEP Inválido", message: "Algo deu errado")
+            addressView.zipCodeTextField.text = Strings.space
+            addressView.adressTextField.text =  Strings.space
+            addressView.neighborhoodTextField.text =  Strings.space
+            addressView.cityTextField.text =  Strings.space
+            addressView.stateTextField.text =  Strings.space
+            addressView.complementTextField.text =  Strings.space
+            showAlert(title: Strings.invalidZipCode, message: Strings.somethingWentWrong)
         }
         
         // Estados - Sucesso

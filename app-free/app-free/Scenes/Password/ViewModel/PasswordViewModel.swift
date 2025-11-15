@@ -45,7 +45,7 @@ class PasswordViewModel {
             return
         }
         if password != confirmPassword {
-            onValidationError?("As senhas não conferem")
+            onValidationError?(Strings.passwordCheck)
         }
     }
     

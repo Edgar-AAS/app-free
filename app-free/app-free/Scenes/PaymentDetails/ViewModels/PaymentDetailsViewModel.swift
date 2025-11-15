@@ -32,28 +32,27 @@ final class PaymentDetailsViewModel {
     }
     
     func updateAgency(_ text: String?) {
-        let digits = (text ?? "").filter { $0.isNumber }
-        form.agency = String(digits.prefix(4))
+        let digits = (text ?? Strings.space).filter { $0.isNumber }
+        form.agency = String(digits.prefix(Int(AFSizes.size4)))
         validateForm()
     }
     
     func updateAccount(_ text: String?) {
-        let input = text ?? ""
+        let input = text ?? Strings.space
         
         let allowed = input.filter { char in
-            char.isNumber || char == "-" || char == "X" || char == "x"
+            char.isNumber || char == Character(Strings.dashes) || char == Character(Strings.upperCaseX) || char == Character(Strings.lowerCaseX)
         }
 
-        let uppercased = allowed.replacingOccurrences(of: "x", with: "X")
- 
-        form.account = String(uppercased.prefix(10))
+        let uppercased = allowed.replacingOccurrences(of: Strings.lowerCaseX, with: Strings.upperCaseX)
+        form.account = String(uppercased.prefix(Int(AFSizes.size10)))
         
         validateForm()
     }
 
     
     func updatePixKey(_ text: String?) {
-        form.pixKey = text ?? ""
+        form.pixKey = text ?? Strings.space
         validateForm()
     }
     
@@ -70,12 +69,12 @@ final class PaymentDetailsViewModel {
     private func getValidationErrors() -> [String] {
         var errors: [String] = []
         
-        if form.selectedBank == nil { errors.append("Selecione um banco.") }
-        if form.agency.isEmpty { errors.append("Agência obrigatória.") }
-        else if form.agency.count != 4 { errors.append("Agência deve ter 4 dígitos.") }
-        if form.account.isEmpty { errors.append("Conta obrigatória.") }
-        else if !isValidAccount(form.account) { errors.append("Conta inválida (máx. 8 dígitos + dígito verificador numérico ou 'X').") }
-        if form.pixKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { errors.append("Chave PIX obrigatória.") }
+        if form.selectedBank == nil { errors.append(Strings.selectBank) }
+        if form.agency.isEmpty { errors.append(Strings.agencyRequired) }
+        else if form.agency.count != Int(AFSizes.size4) { errors.append(Strings.agencyMustHaveFourDigits) }
+        if form.account.isEmpty { errors.append(Strings.accountRequired) }
+        else if !isValidAccount(form.account) { errors.append(Strings.invalidAccount) }
+        if form.pixKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { errors.append(Strings.pixKeyRequired) }
         
         return errors
     }
@@ -96,15 +95,15 @@ final class PaymentDetailsViewModel {
         
         if errors.isEmpty {
             let info = """
-                Banco: \(form.selectedBank?.displayName ?? "Nenhum")
-                Agência: \(form.agency)
-                Conta: \(form.account)
-                Tipo de Conta: \(form.accountType.rawValue) (\(form.accountType.short))
-                Pix: \(form.pixKey)
+                \(Strings.bankLabel) \(form.selectedBank?.displayName ?? Strings.noneLabel)
+                \(Strings.agencyLabel) \(form.agency)
+                \(Strings.accountLabel) \(form.account)
+                \(Strings.accountTypeLabel) \(form.accountType.rawValue) (\(form.accountType.short))
+                \(Strings.pixLabel) \(form.pixKey)
                 """
             return .success(info: info)
         } else {
-            return .failure(message: errors.joined(separator: "\n"))
+            return .failure(message: errors.joined(separator: Strings.skipLine))
         }
     }
     
@@ -148,7 +147,7 @@ final class PaymentDetailsViewModel {
         }
         
         if results.isEmpty {
-            filteredBanks = [Bank(ispb: nil, name: "Nenhum banco encontrado", code: nil, fullName: nil)]
+            filteredBanks = [Bank(ispb: nil, name: Strings.bankNotFound, code: nil, fullName: nil)]
             return
         }
         

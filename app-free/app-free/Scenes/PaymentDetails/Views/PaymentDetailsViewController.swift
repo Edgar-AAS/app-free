@@ -15,6 +15,7 @@ protocol PaymentDetailsScreenDelegate: AnyObject {
 class PaymentDetailsViewController: UIViewController {
     var screen: PaymentDetailsScreen?
     private let viewModel = PaymentDetailsViewModel()
+    var signUpModel: SignUpForm?
 
     override func loadView() {
         screen = PaymentDetailsScreen()
@@ -63,6 +64,10 @@ extension PaymentDetailsViewController: PaymentDetailsScreenDelegate {
         let result = viewModel.continueButtonTapped()
         switch result {
         case .success(let info):
+            let passwordVC = PasswordFormViewController()
+            passwordVC.signUpModel = self.signUpModel
+            navigationController?.pushViewController(passwordVC, animated: true)
+            
             print("✅ Dados bancários configurados com sucesso!")
             print(info)
         case .failure(let message):
@@ -76,7 +81,7 @@ extension PaymentDetailsViewController: PaymentDetailsScreenDelegate {
         let form = viewModel.form
 
         if form.selectedBank == nil { screen.bankContainer.shake() }
-        if form.agency.isEmpty || form.agency.count != 4 { screen.agencyTextField.shake() }
+        if form.agency.isEmpty || form.agency.count != Int(AFSizes.size4) { screen.agencyTextField.shake() }
         if form.account.isEmpty || !viewModel.isValidAccount(form.account) { screen.accountTextField.shake() }
         if form.pixKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { screen.pixTextField.shake() }
     }
@@ -89,8 +94,8 @@ extension PaymentDetailsViewController: PaymentDetailsViewModelDelegate {
 
 private extension PaymentDetailsViewController {
     func presentAlert(_ message: String) {
-        let alert = UIAlertController(title: "Erro de Validação!", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+        let alert = UIAlertController(title: Strings.validationError, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Strings.ok, style: .destructive))
         present(alert, animated: true)
     }
 }
