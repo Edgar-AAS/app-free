@@ -35,7 +35,7 @@ class AddressRegistrationView: UIView {
     lazy var arrowButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
+        button.setImage(Assets.arrowLeft, for: .normal)
         button.addTarget(self, action: #selector(hadleTapArrow), for: .touchUpInside)
         
         return button
@@ -49,33 +49,33 @@ class AddressRegistrationView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        label.textColor = .black
+        label.textColor = AFColors.patternBlack
         label.textAlignment = .left
-        label.font = UIFont(name: "OpenSans-Bold", size: 30)
+        label.font = AFFonts.bold(AFSizes.size32)
         
-        label.text = "Endereço Pessoal"
+        label.text = Strings.personalAddress
         
         return label
     } ()
     
     lazy var zipCodeTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .numberPad
         txt.attributedPlaceholder = NSAttributedString (
-            string: "CEP",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.zipCode,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.fontSmall)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         txt.addTarget(self, action: #selector(zipCodeDidChange), for: .editingChanged)
         
@@ -84,134 +84,134 @@ class AddressRegistrationView: UIView {
     
     @objc private func zipCodeDidChange() {
         guard let zipCode = zipCodeTextField.text else { return }
-        
-        let cleanZipCode = zipCode.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-            
-        let formatterZipCode = String(cleanZipCode.prefix(8))
-        
-        var formatter = ""
-        if formatterZipCode.count > 5 {
-            let index = formatterZipCode.index(formatterZipCode.startIndex, offsetBy: 5)
-            formatter = String(formatterZipCode[..<index]) + "-" + String(formatterZipCode[index...])
-        }else {
+
+        let cleanZipCode = zipCode.replacingOccurrences(of: Strings.numbers0to9, with: Strings.space, options: .regularExpression)
+
+        let formatterZipCode = String(cleanZipCode.prefix(Int(AFSizes.size8)))
+
+        var formatter = Strings.space
+        if formatterZipCode.count > Int(AFSizes.size5) { 
+            let index = formatterZipCode.index(formatterZipCode.startIndex, offsetBy: Int(AFSizes.size5))
+            formatter = String(formatterZipCode[..<index]) + Strings.dashes + String(formatterZipCode[index...])
+        } else {
             formatter = formatterZipCode
         }
-        
+
         zipCodeTextField.text = formatter
-        
-        if cleanZipCode.count == 8 {
+
+        if cleanZipCode.count == Int(AFSizes.size8) {
             onZipCodeChanged?(cleanZipCode)
         }
     }
     
     lazy var adressTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .default
         txt.attributedPlaceholder = NSAttributedString (
-            string: "Endereço",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.address,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.fontSmall)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         return txt
     }()
     
     lazy var numberTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .numberPad
         txt.attributedPlaceholder = NSAttributedString (
-            string: "N˚",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.number,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.fontSmall)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         return txt
     }()
     
     lazy var complementTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .default
         txt.attributedPlaceholder = NSAttributedString (
-            string: "Complemento",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.complement,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.size12)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         return txt
     }()
     
     lazy var neighborhoodTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .default
         txt.attributedPlaceholder = NSAttributedString (
-            string: "Bairro",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.neighboor,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
         
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.size12)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         return txt
     }()
     
     lazy var stateTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor =  AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .default
         txt.attributedPlaceholder = NSAttributedString (
-            string: "Estado",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.state,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
         
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.size12)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleStateTap))
             txt.addGestureRecognizer(tapGesture)
@@ -225,23 +225,23 @@ class AddressRegistrationView: UIView {
     
     lazy var cityTextField: UITextField = {
         let txt = UITextField()
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 55))
+        let paddingView = UIView(frame: CGRect(x: AFSizes.size0, y: AFSizes.size0, width: AFSizes.size10, height: AFSizes.size56))
         txt.leftView = paddingView
         txt.leftViewMode = .always
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.autocorrectionType = .no
-        txt.backgroundColor = UIColor(hexString: "E6EDFF")
+        txt.backgroundColor = AFColors.brandLightBlue
         txt.borderStyle = .none
         txt.keyboardType = .default
         txt.attributedPlaceholder = NSAttributedString (
-            string: "Cidade",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray.withAlphaComponent(2.3)]
+            string: Strings.city,
+            attributes: [NSAttributedString.Key.foregroundColor: AFColors.textFieldGray]
         )
         
-        txt.font = UIFont.systemFont(ofSize: 12)
-        txt.textColor = .darkGray
+        txt.font = UIFont.systemFont(ofSize: AFSizes.size12)
+        txt.textColor = AFColors.patternDarkGray
         txt.clipsToBounds = true
-        txt.layer.cornerRadius = 10
+        txt.layer.cornerRadius = AFSizes.size10
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCityTap))
             txt.addGestureRecognizer(tapGesture)
@@ -251,38 +251,36 @@ class AddressRegistrationView: UIView {
     @objc private func handleCityTap() {
         onTapCityButton?()
     }
-
-    
     
     lazy var stateSearchImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "fi-rr-search")
+        image.image = Assets.search
         return image
     }()
 
     lazy var citySearchImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "fi-rr-search")
+        image.image = Assets.search
         return image
     }()
     
     lazy var continueButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("CONTINUAR", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(hexString: "304FFE")
-        button.layer.cornerRadius = 27
+        button.setTitle(Strings.continueButton, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: AFSizes.size18)
+        button.setTitleColor(AFColors.patternWhite, for: .normal)
+        button.backgroundColor = AFColors.brandDarkBlue
+        button.layer.cornerRadius = AFSizes.size28
         button.titleLabel?.textAlignment = .center
         
         // Sombra
         button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 4)
-        button.layer.shadowOpacity = 0.25
-        button.layer.shadowRadius = 4
+        button.layer.shadowOffset = CGSize(width: AFSizes.size1, height: AFSizes.size4)
+        button.layer.shadowOpacity = Float(AFSizes.shadowOpacity)
+        button.layer.shadowRadius = AFSizes.size1
         button.addTarget(self, action: #selector(handleContinueTap), for: .touchUpInside)
         
         return button
@@ -298,7 +296,7 @@ class AddressRegistrationView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Strings.fatalError)
     }
 
 }
@@ -346,26 +344,26 @@ extension AddressRegistrationView: CodeView {
         
         
         NSLayoutConstraint.activate([
-            arrowButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            arrowButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            arrowButton.widthAnchor.constraint(equalToConstant: 24),
-            arrowButton.heightAnchor.constraint(equalToConstant: 24),
+            arrowButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: AFSizes.size20),
+            arrowButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            arrowButton.widthAnchor.constraint(equalToConstant: AFSizes.size24),
+            arrowButton.heightAnchor.constraint(equalToConstant: AFSizes.size24),
         
-            descriptionLabel.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: 28),
-            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            descriptionLabel.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: AFSizes.size28),
+            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20)
         ])
         
         
         let horizontalStack = UIStackView(arrangedSubviews: [adressTextField, numberTextField])
         horizontalStack.axis = .horizontal
-        horizontalStack.spacing = 12
+        horizontalStack.spacing = AFSizes.size12
         horizontalStack.distribution = .fill
         horizontalStack.translatesAutoresizingMaskIntoConstraints = false
         
         
-        adressTextField.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        numberTextField.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        adressTextField.widthAnchor.constraint(equalToConstant: AFSizes.size210).isActive = true
+        numberTextField.widthAnchor.constraint(equalToConstant: AFSizes.size80).isActive = true
         
         // StackView principal
         let mainStackView = UIStackView(arrangedSubviews: [
@@ -378,7 +376,7 @@ extension AddressRegistrationView: CodeView {
         ])
         
         mainStackView.axis = .vertical
-        mainStackView.spacing = 28
+        mainStackView.spacing = AFSizes.size28
         //esta definindo a distancia entre cada textfield
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -386,15 +384,15 @@ extension AddressRegistrationView: CodeView {
         
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 30),
-            mainStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            mainStackView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: AFSizes.size32),
+            mainStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20)
             //leading e trailing define a largura diretamente
         ])
         
         //O UIStackView não tem uma propriedade direta para definir a altura dos elementos que estão dentro dele. Por isso é feito dessa forma
         
-        let textFieldHeight: CGFloat = 55
+        let textFieldHeight: CGFloat = AFSizes.size56
         [zipCodeTextField, adressTextField, numberTextField, complementTextField,
          neighborhoodTextField, stateTextField, cityTextField].forEach {
             $0.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
@@ -402,24 +400,24 @@ extension AddressRegistrationView: CodeView {
         
         
         NSLayoutConstraint.activate([
-            stateSearchImageView.trailingAnchor.constraint(equalTo: stateTextField.trailingAnchor, constant: -15),
+            stateSearchImageView.trailingAnchor.constraint(equalTo: stateTextField.trailingAnchor, constant: -AFSizes.size16),
             stateSearchImageView.centerYAnchor.constraint(equalTo: stateTextField.centerYAnchor),
-            stateSearchImageView.widthAnchor.constraint(equalToConstant: 20),
-            stateSearchImageView.heightAnchor.constraint(equalToConstant: 20),
+            stateSearchImageView.widthAnchor.constraint(equalToConstant: AFSizes.size20),
+            stateSearchImageView.heightAnchor.constraint(equalToConstant: AFSizes.size20),
             
-            citySearchImageView.trailingAnchor.constraint(equalTo: cityTextField.trailingAnchor, constant: -15),
+            citySearchImageView.trailingAnchor.constraint(equalTo: cityTextField.trailingAnchor, constant: -AFSizes.size16),
             citySearchImageView.centerYAnchor.constraint(equalTo: cityTextField.centerYAnchor),
-            citySearchImageView.widthAnchor.constraint(equalToConstant: 20),
-            citySearchImageView.heightAnchor.constraint(equalToConstant: 20)
+            citySearchImageView.widthAnchor.constraint(equalToConstant: AFSizes.size20),
+            citySearchImageView.heightAnchor.constraint(equalToConstant: AFSizes.size20)
         ])
         
         
         NSLayoutConstraint.activate([
-            continueButton.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 60),
-            continueButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            continueButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            continueButton.heightAnchor.constraint(equalToConstant: 54),
-            continueButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -30)
+            continueButton.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: AFSizes.size60),
+            continueButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            continueButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20),
+            continueButton.heightAnchor.constraint(equalToConstant: AFSizes.size56),
+            continueButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -AFSizes.size32)
         ])
     }
     

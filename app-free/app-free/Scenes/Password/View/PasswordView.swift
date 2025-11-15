@@ -8,7 +8,7 @@ class PasswordView: UIView {
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = AFColors.patternWhite
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsVerticalScrollIndicator = false
         
@@ -20,11 +20,10 @@ class PasswordView: UIView {
         return view
     }()
     
-    //TODO: - Este bo
     lazy var arrowButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "fi-rr-arrow-left"), for: .normal)
+        button.setImage((Assets.arrowLeft), for: .normal)
         button.addTarget(self, action: #selector(handleTapArrow), for: .touchUpInside)
         
         return button
@@ -37,22 +36,22 @@ class PasswordView: UIView {
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = AFColors.patternBlack
         label.textAlignment = .left
-        label.font = UIFont(name: "OpenSans-Bold", size: 30)
-        label.text = "Crie uma senha"
+        label.font = AFFonts.bold(AFSizes.size32)
+        label.text = Strings.createPassword
         
         return label
     }()
     
     lazy var passwordTextField: AFTextField = {
-        let txt = AFTextField(type: .password(placeholder: "Crie uma senha"))
+        let txt = AFTextField(type: .password(placeholder: Strings.createPassword))
         txt.translatesAutoresizingMaskIntoConstraints = false
         return txt
     }()
 
     lazy var confirmPasswordTextField: AFTextField = {
-        let txt = AFTextField(type: .password(placeholder: "Confirme sua senha"))
+        let txt = AFTextField(type: .password(placeholder: Strings.confirmPassword))
         txt.translatesAutoresizingMaskIntoConstraints = false
         txt.addTarget(self, action: #selector(validatePasswords), for: .editingDidEnd)
         return txt
@@ -65,18 +64,18 @@ class PasswordView: UIView {
     lazy var endButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("FINALIZAR", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(hexString: "304FFE")
-        button.layer.cornerRadius = 27
+        button.setTitle(Strings.finish, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: AFSizes.size16)
+        button.setTitleColor(AFColors.patternWhite, for: .normal)
+        button.backgroundColor = AFColors.brandDarkBlue
+        button.layer.cornerRadius = AFSizes.size26
         button.titleLabel?.textAlignment = .center
         
         // Sombra
         button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 4)
-        button.layer.shadowOpacity = 0.25
-        button.layer.shadowRadius = 4
+        button.layer.shadowOffset = CGSize(width: AFSizes.size1, height: AFSizes.size4)
+        button.layer.shadowOpacity = Float(AFSizes.shadowOpacity)
+        button.layer.shadowRadius = AFSizes.size4
         button.addTarget(self, action: #selector(handleEndTap), for: .touchUpInside)
         
         return button
@@ -120,14 +119,14 @@ extension PasswordView: CodeView {
         containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         
         NSLayoutConstraint.activate([
-            arrowButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            arrowButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            arrowButton.widthAnchor.constraint(equalToConstant: 24),
-            arrowButton.heightAnchor.constraint(equalToConstant: 24),
+            arrowButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: AFSizes.size20),
+            arrowButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            arrowButton.widthAnchor.constraint(equalToConstant: AFSizes.size24),
+            arrowButton.heightAnchor.constraint(equalToConstant: AFSizes.size24),
         
-            descriptionLabel.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: 28),
-            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            descriptionLabel.topAnchor.constraint(equalTo: arrowButton.bottomAnchor, constant: AFSizes.size28),
+            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20)
         ])
         
         let mainStack = UIStackView(arrangedSubviews: [
@@ -136,28 +135,28 @@ extension PasswordView: CodeView {
         ])
         
         mainStack.axis = .vertical
-        mainStack.spacing = 28
+        mainStack.spacing = AFSizes.size28
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         
         containerView.addSubview(mainStack)
         
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 30),
-            mainStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            mainStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: AFSizes.size32),
+            mainStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            mainStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20)
         ])
         
-        let textFieldHeight: CGFloat = 55
+        let textFieldHeight: CGFloat = AFSizes.size56
         [passwordTextField, confirmPasswordTextField].forEach {
             $0.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         }
         
         NSLayoutConstraint.activate([
-            endButton.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 416),
-            endButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            endButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            endButton.heightAnchor.constraint(equalToConstant: 54),
-            endButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -30)
+            endButton.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: AFSizes.size416),
+            endButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AFSizes.size20),
+            endButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AFSizes.size20),
+            endButton.heightAnchor.constraint(equalToConstant: AFSizes.size56),
+            endButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -AFSizes.size32)
         ])
     }
 }

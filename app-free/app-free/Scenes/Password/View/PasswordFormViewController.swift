@@ -49,7 +49,7 @@ class PasswordFormViewController: UIViewController {
         }
         
         viewModel.onValidationError = { [weak self] errorMessage in
-            self?.showAlert(title: "Erro de Validação", message: errorMessage)
+            self?.showAlert(title: Strings.validationError, message: errorMessage)
         }
         
         passwordView?.onValidationError = {[weak self] in
@@ -91,13 +91,12 @@ class PasswordFormViewController: UIViewController {
 
     private func updateButtonAppearance(isEnabled: Bool) {
         passwordView?.endButton.isEnabled = isEnabled
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.passwordView?.endButton.alpha = isEnabled ? 1.0 : 0.5
+        UIView.animate(withDuration: TimeInterval(AFSizes.size03)) { [weak self] in
+            self?.passwordView?.endButton.alpha = isEnabled ? AFSizes.size1 : AFSizes.size05
             self?.passwordView?.endButton.backgroundColor = isEnabled ?
-                UIColor(hexString: "304FFE") : UIColor.gray
+                AFColors.brandDarkBlue : UIColor.gray
         }
     }
-    
     
     private func showHandleEnd() {
         Task {
@@ -109,23 +108,23 @@ class PasswordFormViewController: UIViewController {
                 await MainActor.run {
                     if let typedPassword = passwordView?.passwordTextField.text {
                         self.passwordModel = PasswordModel(password: typedPassword)
-                        showAlert(title: "Sucesso", message: "Cadastro realizado!")
+                        showAlert(title: Strings.success, message: Strings.successSignUp)
                     }
                 }
             } catch {
                 await MainActor.run {
-                    showAlert(title: "Erro", message: "Falha ao salvar: \(error.localizedDescription)")
+                    showAlert(title: Strings.error, message: "\(Strings.saveError): \(error.localizedDescription)")
                 }
             }
         }
     }
 
     
-    private func showAlert(title: String = "Atenção", message: String) {
+    private func showAlert(title: String = Strings.attetion, message: String) {
         let alert = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: Strings.ok, style: .default))
         present(alert, animated: true)
     }
 }
