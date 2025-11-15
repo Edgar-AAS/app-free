@@ -69,7 +69,8 @@ extension PaymentDetailsViewController: PaymentDetailsScreenDelegate {
             let passwordVC = PasswordFormViewController()
             passwordVC.signUpModel = self.signUpModel
             navigationController?.pushViewController(passwordVC, animated: true)
-            print()
+            
+            print("✅ Dados bancários configurados com sucesso!")
             print(info)
         case .failure(let message):
             presentAlert(message)

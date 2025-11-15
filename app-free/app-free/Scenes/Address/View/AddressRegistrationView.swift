@@ -251,8 +251,6 @@ class AddressRegistrationView: UIView {
     @objc private func handleCityTap() {
         onTapCityButton?()
     }
-
-    
     
     lazy var stateSearchImageView: UIImageView = {
         let image = UIImageView()

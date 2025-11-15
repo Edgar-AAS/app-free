@@ -78,7 +78,7 @@ class AddressFormViewController: UIViewController {
             let paymentVC = PaymentDetailsViewController()
             paymentVC.signUpModel = self.signUpModel
             navigationController?.pushViewController(paymentVC, animated: true)
-            print(Strings.navigationNextScene)
+            print("Navegando para a próxima tela")
         }
     }
 
@@ -144,7 +144,6 @@ class AddressFormViewController: UIViewController {
             addressView.cityTextField.text =  Strings.space
             addressView.stateTextField.text =  Strings.space
             addressView.complementTextField.text =  Strings.space
-            
             showAlert(title: Strings.invalidZipCode, message: Strings.somethingWentWrong)
         }
         
