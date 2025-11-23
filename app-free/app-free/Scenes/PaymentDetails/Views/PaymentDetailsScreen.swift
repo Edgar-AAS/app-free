@@ -100,13 +100,13 @@ class PaymentDetailsScreen: UIView {
     }()
     
     lazy var agencyTextField: AFTextField = {
-        let textField = AFTextField(type: .numeric(placeholder: Strings.agencyFourDigits))
+        let textField = AFTextField(type: .agency(placeholder: Strings.agencyFourDigits))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
 
     lazy var accountTextField: AFTextField = {
-        let textField = AFTextField(type:.default(placeholder: Strings.accountWithDigit))
+        let textField = AFTextField(type:.account(placeholder: Strings.accountWithDigit))
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }()
