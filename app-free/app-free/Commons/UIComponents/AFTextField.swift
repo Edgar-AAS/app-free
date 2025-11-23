@@ -17,6 +17,8 @@ final class AFTextField: UITextField {
         case cpf(placeholder: String)
         case cellphone(placeholder: String)
         case date(placeholder: String)
+        case agency(placeholder: String)
+        case account(placeholder: String)
     }
     
     private var isPassword: Bool = false
@@ -71,6 +73,18 @@ final class AFTextField: UITextField {
             self.keyboardType = .numberPad
             self.isPassword = false
             addTarget(self, action: #selector(applyDateMask), for: .editingChanged)
+            
+        case .agency(let placeholder):
+            self.placeholder = placeholder
+            self.keyboardType = .numberPad
+            self.isPassword = false
+            addTarget(self, action: #selector(applyAgencyMask), for: .editingChanged)
+            
+        case .account(let placeholder):
+            self.placeholder = placeholder
+            self.keyboardType = .numberPad
+            self.isPassword = false
+            addTarget(self, action: #selector(applyAccountMask), for: .editingChanged)
         }
         
         borderStyle = .roundedRect
@@ -178,6 +192,34 @@ final class AFTextField: UITextField {
             result.append(char)
             if index == 7 { break }
         }
+        self.text = result
+    }
+    
+    @objc private func applyAgencyMask() {
+        let digits = text?.filter { "0123456789".contains($0) } ?? ""
+        let limited = String(digits.prefix(4))
+        self.text = limited
+    }
+    
+    @objc private func applyAccountMask() {
+        guard let text = self.text else { return }
+        let digits = text.filter { "0123456789".contains($0) }       
+
+        let limitedDigits = String(digits.prefix(8))
+        
+        var result = ""
+        for (index, char) in limitedDigits.enumerated() {
+            if index == 7 {
+                result.append("-\(char)")
+            } else {
+                result.append(char)
+            }
+        }
+        
+        if result.hasSuffix("-") {
+            result.removeLast()
+        }
+        
         self.text = result
     }
 

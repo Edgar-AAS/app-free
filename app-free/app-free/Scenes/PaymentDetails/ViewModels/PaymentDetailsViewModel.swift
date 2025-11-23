@@ -40,12 +40,9 @@ final class PaymentDetailsViewModel {
     func updateAccount(_ text: String?) {
         let input = text ?? Strings.space
         
-        let allowed = input.filter { char in
-            char.isNumber || char == Character(Strings.dashes) || char == Character(Strings.upperCaseX) || char == Character(Strings.lowerCaseX)
-        }
-
-        let uppercased = allowed.replacingOccurrences(of: Strings.lowerCaseX, with: Strings.upperCaseX)
-        form.account = String(uppercased.prefix(Int(AFSizes.size10)))
+        let cleaned = input.filter { "0123456789-".contains($0) }
+        form.account = String(cleaned.prefix(10))
+        form.account = cleaned
         
         validateForm()
     }
@@ -81,7 +78,7 @@ final class PaymentDetailsViewModel {
     
     func isValidAccount(_ account: String) -> Bool {
         let trimmed = account.trimmingCharacters(in: .whitespacesAndNewlines)
-        let regex = #"^\d{1,8}(-[0-9Xx])?$"#
+        let regex = #"^\d{6,8}-\d$"#
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: trimmed)
     }
     
